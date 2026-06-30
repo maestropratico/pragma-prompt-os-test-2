@@ -1,0 +1,8 @@
+# PRAGMA Prompt OS — Test Build
+# Questo repository contiene una build di test, non destinata a indicizzazione pubblica.
+# https://maestropratico.com
+
+User-agent: *
+Disallow: /
+
+# Versione stabile disponibile su maestropratico.com
