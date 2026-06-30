@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRAGMA Prompt OS — v1.1.5-dev</title>
+<title>PRAGMA Prompt OS — v1.1.8-dev</title>
 <style>
   /* Font: system stack offline — nessuna dipendenza esterna */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,9 +12,9 @@
     --bg:       #0d0d14;
     --surface:  #141420;
     --surface2: #1a1a2c;
-    --border:   #2a2a40;
-    --text:     #e8e8f0;
-    --muted:    #6b6b90;
+    --border:   #34344f;
+    --text:     #f0f0f8;
+    --muted:    #a8a9c9;
     --c1: #3b82f6;
     --c2: #22c55e;
     --c3: #eab308;
@@ -70,11 +70,17 @@
     --bg:      #f4f4fb;
     --surface: #ffffff;
     --surface2:#eeeef6;
-    --border:  #d4d4e8;
+    --border:  #c9cadf;
     --text:    #171722;
-    --muted:   #5f6078;
+    --muted:   #4f5168;
     --shadow-focus: 0 0 0 2px rgba(0,0,0,0.12);
     --shadow-glow:  0 0 0 2px rgba(0,0,0,0.12);
+    /* Colori blocchi — versioni scure per contrasto su sfondo chiaro (WCAG AA ≥4.5:1) */
+    --c1: #1d4ed8;  /* blu scuro    6.1:1 su bg */
+    --c2: #15803d;  /* verde scuro  4.6:1 su bg */
+    --c3: #854d0e;  /* ambra scura  6.3:1 su bg */
+    --c4: #c2410c;  /* arancio scuro 4.7:1 su bg */
+    --c5: #7e22ce;  /* viola scuro  6.4:1 su bg */
   }
 
   body {
@@ -223,7 +229,13 @@
     display: flex; flex-direction: column; align-items: center;
     gap: var(--space-4); text-align: center;
   }
-  .opt-card:hover { background: var(--surface2); }
+  /* BUG-003: hover solo su dispositivi con puntatore reale (no sticky hover su touch) */
+  @media (hover: hover) {
+    .opt-card:hover { background: var(--surface2); }
+  }
+  @media (hover: none) {
+    .opt-card:hover { background: var(--surface); }
+  }
   .opt-card.selected { border-color: var(--active-color, #fff); background: var(--surface2); }
   .opt-card .opt-icon { font-size: var(--text-2xl); }
   .opt-card .opt-label { font-size: var(--text-md); font-weight: 500; }
@@ -417,6 +429,31 @@
   .copy-btn:hover { color: var(--text); }
   .copy-btn.copied { color: var(--c2); border-color: var(--c2); }
 
+  /* UX-015 — link rapidi servizi IA */
+  .ai-links {
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border);
+  }
+  .ai-links-label {
+    font-family: var(--mono); font-size: var(--text-xs);
+    color: var(--muted); letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: var(--space-4);
+  }
+  .ai-links-row {
+    display: flex; gap: var(--space-3); flex-wrap: wrap;
+  }
+  .ai-link {
+    font-family: var(--mono); font-size: var(--text-sm); font-weight: 600;
+    padding: 7px 14px; border-radius: var(--radius-md);
+    border: 1px solid var(--border); color: var(--muted);
+    text-decoration: none; background: var(--surface2);
+    transition: color .15s, border-color .15s;
+    white-space: nowrap; min-height: 44px;
+    display: flex; align-items: center;
+  }
+  .ai-link:hover { color: var(--text); border-color: var(--muted); }
+
   /* info box */
   .info-box {
     background: var(--surface2); border-left: 3px solid var(--active-color, var(--c1));
@@ -479,9 +516,15 @@
   .tag-btn {
     font-size: var(--text-md); padding: 6px 12px; border-radius: var(--radius-2xl);
     background: var(--surface); border: 1px solid var(--border);
-    color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s;
+    color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s, background .15s;
   }
-  .tag-btn.active { border-color: var(--active-color, #fff); color: var(--text); }
+  .tag-btn.active {
+    border-color: var(--active-color, var(--c1));
+    color: var(--text);
+    background: var(--surface2);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--active-color, var(--c1));
+  }
   .tag-custom-row { display: flex; gap: var(--space-4); align-items: center; }
   .tag-custom-row input { margin-bottom: 0; flex: 1; }
   .tag-add-btn {
@@ -641,7 +684,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-logo">PRAGMA <span>PROMPT OS</span></div>
-  <div class="topbar-version" style="font-size:var(--text-sm);color:var(--muted)">v1.1.5-dev — UX-002/003</div>
+  <div class="topbar-version" style="font-size:var(--text-sm);color:var(--muted)">v1.1.8-dev — Contrast patch</div>
 
   <!-- Desktop controls -->
   <div class="topbar-desktop">
@@ -1064,6 +1107,17 @@
       </div>
       <div class="terminal" id="output-completo"></div>
       <button class="copy-btn" data-label="Copia prompt" onclick="copyOutput('output-completo', this)">Copia prompt</button>
+      <!-- UX-015: link rapidi ai servizi IA -->
+      <div class="ai-links">
+        <div class="ai-links-label">Apri il prompt con:</div>
+        <div class="ai-links-row">
+          <a class="ai-link" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+          <a class="ai-link" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+          <a class="ai-link" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+          <a class="ai-link" href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+          <a class="ai-link" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a>
+        </div>
+      </div>
     </div>
 
     <div id="tab-compatto" style="display:none">
@@ -1105,14 +1159,14 @@
 <footer class="site-footer">
   <div class="footer-brand">
     <div class="footer-brand-name" style="font-size:var(--text-sm)">PRAGMA <span>PROMPT OS</span></div>
-    <div class="footer-version" id="footer-version">v1.1.5-dev</div>
+    <div class="footer-version" id="footer-version">v1.1.8-dev</div>
   </div>
   <div class="footer-links">
     <a class="footer-link" href="https://maestropratico.com" target="_blank" rel="noopener">🌐 maestropratico.com</a>
     <a class="footer-link" href="mailto:maestropratico@gmail.com">✉ maestropratico@gmail.com</a>
   </div>
   <a class="btn-feedback" id="feedback-btn"
-     href="mailto:maestropratico@gmail.com?subject=PRAGMA%20Prompt%20OS%20-%20Feedback&body=Versione%3A%20v1.1.5-dev%0ADispositivo%3A%20%0ABrowser%3A%20%0A%0AProblema%20riscontrato%3A%20%0A%0ASuggerimento%3A%20">
+     href="mailto:maestropratico@gmail.com?subject=PRAGMA%20Prompt%20OS%20-%20Feedback&body=Versione%3A%20v1.1.8-dev%0ADispositivo%3A%20%0ABrowser%3A%20%0A%0AProblema%20riscontrato%3A%20%0A%0ASuggerimento%3A%20">
     ✉ Invia feedback
   </a>
   <!-- Sostieni: attivare link dopo decisione fiscale (PayPal.Me o Ko-fi) -->
@@ -1272,6 +1326,8 @@ function toggleOpt(el, group, single=false) {
     parent.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
   }
   el.classList.toggle('selected');
+  // BUG-003: rilascia il focus per evitare hover persistente su touch
+  requestAnimationFrame(() => el.blur());
   collectState(); updateScore();
 }
 
@@ -1622,7 +1678,7 @@ function exportPrompt() {
   const filename = `PRAGMA_prompt_${ts}.${format}`;
   let content = completo;
   if (format==='md') {
-    content = `# Prompt generato da PRAGMA Prompt OS v1.1.5-dev\n_${new Date().toLocaleString('it-IT')}_\n\n---\n\n` + completo;
+    content = `# Prompt generato da PRAGMA Prompt OS v1.1.8-dev\n_${new Date().toLocaleString('it-IT')}_\n\n---\n\n` + completo;
   }
   const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
   const a = document.createElement('a');
