@@ -5,12 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Protezione indicizzazione: test build non destinata a SEO pubblico -->
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="theme-color" content="#1E2D4E">
+<meta name="theme-color" content="#0B1020">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PRAGMA">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
-<link rel="icon" type="image/png" sizes="96x96" href="icon-96x96.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -506,6 +504,14 @@
     max-width: 480px;
   }
   .home-sub { font-size: var(--text-xl); color: var(--muted); max-width: 420px; line-height: 1.7; }
+  /* SEC-001: disclaimer privacy */
+  .home-privacy {
+    font-size: var(--text-sm); color: var(--muted); opacity: 0.75;
+    max-width: 420px; line-height: 1.6;
+    padding: var(--space-4) var(--space-6);
+    border-left: 2px solid var(--border);
+    margin-top: var(--space-5);
+  }
   .home-blocks {
     display: flex; gap: var(--space-5); flex-wrap: wrap; justify-content: center;
     margin: 8px 0;
@@ -871,6 +877,8 @@
         <button class="btn-cta btn-cta-primary" onclick="startWizard()">CREA NUOVO PROMPT →</button>
         <button class="btn-cta btn-cta-secondary" onclick="loadExisting()">MODIFICA ESISTENTE</button>
       </div>
+      <!-- SEC-001: disclaimer privacy dispositivo condiviso -->
+      <div class="home-privacy">🔒 Privacy: i dati che inserisci restano nel tuo browser e non vengono inviati a server esterni. Se usi un dispositivo condiviso, ricordati di fare Reset al termine.</div>
     </div>
   </div>
 
