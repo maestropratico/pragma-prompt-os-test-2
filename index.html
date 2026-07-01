@@ -543,6 +543,35 @@
     border: 1px solid var(--border);
   }
 
+  /* SEC-002: toast + avviso dati sensibili + cancella dati */
+  .export-toast {
+    position: fixed; bottom: var(--space-10); left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--c3); color: var(--bg);
+    font-family: var(--mono); font-size: var(--text-sm); font-weight: 700;
+    padding: 10px 22px; border-radius: var(--radius-2xl);
+    box-shadow: 0 4px 16px rgba(0,0,0,.35);
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 400; white-space: nowrap;
+  }
+  .export-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .privacy-warning {
+    font-size: var(--text-sm); color: var(--muted);
+    padding: var(--space-4) var(--space-6);
+    border-left: 2px solid var(--border);
+    margin-bottom: var(--space-6); line-height: 1.6;
+  }
+  .btn-clear-data {
+    font-family: var(--mono); font-size: var(--text-sm); font-weight: 600;
+    padding: 8px 14px; border-radius: var(--radius-md);
+    border: 1px solid #ef4444; color: #ef4444;
+    background: transparent; cursor: pointer;
+    transition: background .15s, color .15s;
+    min-height: 44px; white-space: nowrap;
+  }
+  .btn-clear-data:hover { background: #ef4444; color: white; }
+
   /* ── DS-006: HOME SHORTCUT ── */
   .btn-home-shortcut {
     font-family: var(--mono); font-size: var(--text-sm); font-weight: 600;
@@ -804,6 +833,7 @@
     <button class="btn-reset" onclick="toggleTheme()" id="btn-theme" title="Cambia tema">🌙</button>
     <button class="btn-reset" onclick="exportPrompt()">↓ Esporta</button>
     <button class="btn-reset" onclick="resetAll()">↺ Reset</button>
+    <button class="btn-clear-data" onclick="clearLocalData()" title="Cancella i dati salvati nel browser">🗑 Cancella dati</button>
     <button class="btn-home-shortcut" id="btn-hs-desktop" onclick="openHomeShortcut()" title="Aggiungi a schermata Home">⊕ Schermata Home</button>
   </div>
 
@@ -828,6 +858,7 @@
       </div>
       <button class="settings-action" onclick="exportPrompt();closeSettingsMenu()">↓ Esporta prompt</button>
       <button class="settings-action" onclick="closeSettingsMenu();setTimeout(()=>{ if(confirm('Resettare tutto?')){localStorage.removeItem(LS_KEY);location.reload();}},100)">↺ Reset</button>
+      <button class="settings-action" style="color:#ef4444" onclick="clearLocalData();closeSettingsMenu()">🗑 Cancella dati salvati</button>
       <a class="settings-action" id="m-feedback-btn" href="#">✉ Invia feedback</a>
       <button class="settings-action" id="btn-hs-mobile" onclick="openHomeShortcut();closeSettingsMenu()">⊕ Aggiungi a schermata Home</button>
       <!-- UX-010: link sostieni — attivare dopo decisione fiscale -->
@@ -1145,6 +1176,7 @@
     <div class="step-eyebrow" style="color:var(--c5)">🟪 Blocco 5 / 5 — Gestione contesto</div>
     <div class="step-title">Quali informazioni deve vedere?</div>
     <div class="step-sub">Incolla qui il testo, i dati o il documento su cui deve lavorare l'IA. Poi specifica come deve usarli.</div>
+    <div class="privacy-warning">⚠ Evita di inserire password, dati bancari, codici fiscali o dati sanitari. Il testo resta nel browser ma potrebbe essere visibile se condividi il dispositivo.</div>
     <textarea id="context-text" rows="6" placeholder="Incolla qui il testo di riferimento, dati, documento, email ricevuta..." oninput="updateScore()"></textarea>
     <div style="margin-bottom:12px;font-size:var(--text-base);font-weight:500">Come deve usare questo contesto?</div>
     <div class="options-grid" id="context-use-options" style="--active-color:var(--c5)">
@@ -1268,6 +1300,9 @@
 </div><!-- /main -->
 
 <!-- FOOTER -->
+<!-- SEC-002: toast export/cancella -->
+<div class="export-toast" id="export-toast">✓ File esportato</div>
+
 <!-- DS-006: Home Shortcut Panel -->
 <div class="home-shortcut-overlay" id="hs-overlay" onclick="if(event.target===this)closeHomeShortcut()">
   <div class="home-shortcut-panel">
@@ -1871,6 +1906,8 @@ function exportPrompt() {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(a.href);
+  const t = document.getElementById('export-toast');
+  if (t) { t.textContent = '\u2713 File esportato'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
 }
 
 function resetAll() {
@@ -1964,6 +2001,22 @@ function initFeedbackLink() {
   if (btn) btn.href = `mailto:maestropratico@gmail.com?subject=${subject}&body=${body}`;
   const fv = document.getElementById('footer-version');
   if (fv) fv.textContent = version;
+}
+
+// ── SEC-002: CANCELLA DATI LOCALI ───────────────────────────────────────
+function clearLocalData() {
+  if (!confirm('Cancellare i dati salvati nel browser?')) return;
+  try {
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem('pragma_font_scale');
+    localStorage.removeItem('pragma_theme');
+  } catch(e) {}
+  const t = document.getElementById('export-toast');
+  if (t) {
+    t.textContent = '✓ Dati cancellati';
+    t.classList.add('show');
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => { t.textContent = '✓ File esportato'; }, 300); }, 2500);
+  }
 }
 
 // ── DS-006: HOME SHORTCUT ────────────────────────────────────────────────
