@@ -1,0 +1,21 @@
+{
+  "name": "PRAGMA Prompt OS",
+  "short_name": "PRAGMA",
+  "start_url": "/pragma-prompt-os-test-2/",
+  "scope": "/pragma-prompt-os-test-2/",
+  "display": "standalone",
+  "background_color": "#0B1020",
+  "theme_color": "#0B1020",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

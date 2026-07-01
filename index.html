@@ -5,23 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Protezione indicizzazione: test build non destinata a SEO pubblico -->
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="theme-color" content="#1E2D4E">
+<meta name="apple-mobile-web-app-title" content="PRAGMA">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="icon-96x96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="manifest" href="manifest.webmanifest">
 <title>PRAGMA Prompt OS</title>
 <style>
   /* Font: system stack offline — nessuna dipendenza esterna */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:       #0d0d14;
-    --surface:  #141420;
-    --surface2: #1a1a2c;
-    --border:   #34344f;
-    --text:     #f0f0f8;
-    --muted:    #a8a9c9;
-    --c1: #3b82f6;
-    --c2: #22c55e;
-    --c3: #eab308;
-    --c4: #f97316;
-    --c5: #a855f7;
+    --bg:       #0B1020;   /* DS-006: navy quasi-nero */
+    --surface:  #121A2E;   /* DS-006: navy profondo */
+    --surface2: #1A2440;   /* DS-006: navy medio */
+    --border:   #2C3A5C;   /* DS-006: navy chiaro */
+    --text:     #F8FAFC;   /* DS-006: bianco caldo 18.1:1 */
+    --muted:    #B8C1D9;   /* DS-006: grigio-blu 10.5:1 */
+    --c1: #3B82F6;   /* DS-006 dark: blu 5.2:1 */
+    --c2: #22D3EE;   /* DS-006 dark: cyan 10.5:1 */
+    --c3: #34D399;   /* DS-006 dark: verde smeraldo 9.8:1 */
+    --c4: #FB923C;   /* DS-006 dark: arancio MP 8.4:1 */
+    --c5: #A78BFA;   /* DS-006 dark: viola 7.0:1 */
     --mono: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Courier New', monospace;
     --sans: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     --font-scale: 1;
@@ -67,22 +77,26 @@
     --shadow-glow:  0 0 0 2px rgba(255,255,255,0.15);
   }
 
-  /* ── TEMA CHIARO ── */
+  /* ── DS-006: TEMA CHIARO ── */
   [data-theme="light"] {
-    --bg:      #f4f4fb;
-    --surface: #ffffff;
-    --surface2:#eeeef6;
-    --border:  #c9cadf;
-    --text:    #171722;
-    --muted:   #4f5168;
-    --shadow-focus: 0 0 0 2px rgba(0,0,0,0.12);
-    --shadow-glow:  0 0 0 2px rgba(0,0,0,0.12);
-    /* Colori blocchi — versioni scure per contrasto su sfondo chiaro (WCAG AA ≥4.5:1) */
-    --c1: #1d4ed8;  /* blu scuro    6.1:1 su bg */
-    --c2: #15803d;  /* verde scuro  4.6:1 su bg */
-    --c3: #854d0e;  /* ambra scura  6.3:1 su bg */
-    --c4: #c2410c;  /* arancio scuro 4.7:1 su bg */
-    --c5: #7e22ce;  /* viola scuro  6.4:1 su bg */
+    --bg:       #F7F8FC;   /* grigio-blue chiarissimo */
+    --surface:  #FFFFFF;
+    --surface2: #EEF2FF;   /* blue-50 saturo */
+    --border:   #D8DEE9;
+    --text:     #111827;   /* 16.7:1 su bg */
+    --muted:    #4B5563;   /* 7.1:1 su bg */
+    --shadow-focus: 0 0 0 2px rgba(37,99,235,0.35);
+    --shadow-glow:  0 0 0 2px rgba(37,99,235,0.35);
+    /* Colori blocchi — versioni scure per testo su bg chiaro (WCAG AA ≥4.5:1) */
+    --c1: #2563EB;   /* blu primario   4.9:1 */
+    --c2: #0E7490;   /* cyan-800       5.0:1 */
+    --c3: #047857;   /* verde-700      5.2:1 */
+    --c4: #C2410C;   /* arancio-700    4.9:1 */
+    --c5: #7C3AED;   /* viola-700      5.4:1 */
+    /* Varianti vivaci per badge/pill (testo navy sopra) */
+    --c2-vivid: #22D3EE;
+    --c3-vivid: #34D399;
+    --c4-vivid: #FB923C;
   }
 
   body {
@@ -382,7 +396,11 @@
   .btn-prev:hover { color: var(--text); }
   .btn-next {
     background: var(--active-color, var(--c1));
-    color: #000; font-weight: 700;
+    color: var(--bg);    /* navy su colore: alto contrasto in dark (7:1+) */
+    font-weight: 700;
+  }
+  [data-theme="light"] .btn-next {
+    color: #FFFFFF;      /* bianco su blu light 4.9:1 ✅ */
   }
   .btn-next:hover { opacity: .85; }
   .btn-next:disabled { opacity: .3; cursor: not-allowed; }
@@ -507,11 +525,93 @@
     border: none; transition: opacity .15s;
   }
   .btn-cta:hover { opacity: .85; }
-  .btn-cta-primary { background: var(--c5); color: #fff; }
+  .btn-cta-primary {
+    background: var(--c4);      /* arancio MP — identità brand */
+    color: var(--bg);           /* navy su arancio: 8.4:1 dark ✅ */
+  }
+  [data-theme="light"] .btn-cta-primary {
+    color: #FFFFFF;             /* bianco su arancio-700 light: 4.9:1 ✅ */
+  }
   .btn-cta-secondary {
     background: var(--surface2); color: var(--muted);
     border: 1px solid var(--border);
   }
+
+  /* ── DS-006: HOME SHORTCUT ── */
+  .btn-home-shortcut {
+    font-family: var(--mono); font-size: var(--text-sm); font-weight: 600;
+    padding: 8px 14px; border-radius: var(--radius-md);
+    border: 1px solid var(--c4); color: var(--c4);
+    background: transparent; cursor: pointer;
+    transition: background .15s, color .15s;
+    min-height: 44px; display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+  }
+  .btn-home-shortcut:hover { background: var(--c4); color: var(--bg); }
+  [data-theme="light"] .btn-home-shortcut:hover { color: #FFFFFF; }
+
+  .home-shortcut-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.65); z-index: 500; backdrop-filter: blur(3px);
+    align-items: flex-end; justify-content: center; padding: var(--space-8);
+  }
+  .home-shortcut-overlay.visible { display: flex; }
+  .home-shortcut-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: var(--space-10) var(--space-10) var(--space-8);
+    max-width: 400px; width: 100%;
+    box-shadow: 0 24px 48px rgba(0,0,0,.4);
+  }
+  .home-shortcut-header {
+    display: flex; align-items: center; gap: var(--space-6); margin-bottom: var(--space-8);
+  }
+  .home-shortcut-icon {
+    width: 48px; height: 48px; border-radius: var(--radius-lg); flex-shrink: 0;
+    background: #1E2D4E; display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); font-size: 18px; font-weight: 800; color: #FFFFFF;
+    letter-spacing: -1px;
+  }
+  .home-shortcut-title {
+    font-size: var(--text-2xl); font-weight: 700; color: var(--text);
+  }
+  .home-shortcut-sub {
+    font-size: var(--text-sm); color: var(--muted); margin-top: 2px;
+  }
+  .home-shortcut-tabs {
+    display: flex; gap: var(--space-3); margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border); padding-bottom: var(--space-5);
+  }
+  .hs-tab {
+    font-family: var(--mono); font-size: var(--text-sm); font-weight: 600;
+    padding: 6px 14px; border-radius: var(--radius-md); cursor: pointer;
+    border: 1px solid transparent; color: var(--muted); background: none;
+    transition: all .15s;
+  }
+  .hs-tab.active { border-color: var(--c1); color: var(--c1); background: var(--surface2); }
+  .home-shortcut-steps { display: none; }
+  .home-shortcut-steps.visible { display: block; }
+  .hs-step {
+    display: flex; gap: var(--space-6); align-items: flex-start;
+    padding: var(--space-5) 0; border-bottom: 1px solid var(--border);
+    color: var(--text); font-size: var(--text-base); line-height: 1.5;
+  }
+  .hs-step:last-child { border-bottom: none; }
+  .hs-step-num {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: var(--c1); color: var(--bg);
+    font-size: var(--text-sm); font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  [data-theme="light"] .hs-step-num { color: #FFFFFF; }
+  .hs-step strong { color: var(--c4); }
+  .home-shortcut-close {
+    width: 100%; margin-top: var(--space-8); padding: 12px;
+    border-radius: var(--radius-md); border: 1px solid var(--border);
+    background: var(--surface2); color: var(--muted);
+    font-family: var(--mono); font-size: var(--text-sm); cursor: pointer;
+    transition: color .15s;
+  }
+  .home-shortcut-close:hover { color: var(--text); }
 
   /* tag input for vincoli */
   .tag-cloud { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-bottom: 20px; }
@@ -686,7 +786,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-logo">PRAGMA <span>PROMPT OS</span></div>
-  <div class="topbar-version" style="font-size:var(--text-sm);color:var(--muted)">Test Build: v1.1.8-dev</div>
+  <div class="topbar-version" style="font-size:var(--text-sm);color:var(--muted)">Test Build: v1.3-dev</div>
 
   <!-- Desktop controls -->
   <div class="topbar-desktop">
@@ -698,6 +798,7 @@
     <button class="btn-reset" onclick="toggleTheme()" id="btn-theme" title="Cambia tema">🌙</button>
     <button class="btn-reset" onclick="exportPrompt()">↓ Esporta</button>
     <button class="btn-reset" onclick="resetAll()">↺ Reset</button>
+    <button class="btn-home-shortcut" id="btn-hs-desktop" onclick="openHomeShortcut()" title="Aggiungi a schermata Home">⊕ Schermata Home</button>
   </div>
 
   <!-- Mobile: menu ⚙ -->
@@ -722,6 +823,7 @@
       <button class="settings-action" onclick="exportPrompt();closeSettingsMenu()">↓ Esporta prompt</button>
       <button class="settings-action" onclick="closeSettingsMenu();setTimeout(()=>{ if(confirm('Resettare tutto?')){localStorage.removeItem(LS_KEY);location.reload();}},100)">↺ Reset</button>
       <a class="settings-action" id="m-feedback-btn" href="#">✉ Invia feedback</a>
+      <button class="settings-action" id="btn-hs-mobile" onclick="openHomeShortcut();closeSettingsMenu()">⊕ Aggiungi a schermata Home</button>
       <!-- UX-010: link sostieni — attivare dopo decisione fiscale -->
       <a class="settings-action settings-action-support" href="#" title="Disponibile a breve">♡ Sostieni MaestroPratico</a>
     </div>
@@ -1158,17 +1260,90 @@
 </div><!-- /main -->
 
 <!-- FOOTER -->
+<!-- DS-006: Home Shortcut Panel -->
+<div class="home-shortcut-overlay" id="hs-overlay" onclick="if(event.target===this)closeHomeShortcut()">
+  <div class="home-shortcut-panel">
+    <div class="home-shortcut-header">
+      <div class="home-shortcut-icon">MP</div>
+      <div>
+        <div class="home-shortcut-title">Aggiungi a schermata Home</div>
+        <div class="home-shortcut-sub">Crea un collegamento rapido a PRAGMA</div>
+      </div>
+    </div>
+    <div class="home-shortcut-tabs">
+      <button class="hs-tab active" onclick="switchHsTab('ios', this)">📱 iPhone / iPad</button>
+      <button class="hs-tab" onclick="switchHsTab('android', this)">🤖 Android</button>
+      <button class="hs-tab" onclick="switchHsTab('desktop', this)">💻 Desktop</button>
+    </div>
+
+    <div class="home-shortcut-steps visible" id="hs-ios">
+      <div class="hs-step">
+        <div class="hs-step-num">1</div>
+        <div>Apri <strong>Safari</strong> e vai su questo indirizzo</div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">2</div>
+        <div>Tocca il pulsante <strong>Condividi</strong> in basso (quadrato con freccia ↑)</div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">3</div>
+        <div>Scorri e tocca <strong>"Aggiungi a schermata Home"</strong></div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">4</div>
+        <div>Tocca <strong>"Aggiungi"</strong> — l'icona MP apparirà sulla schermata</div>
+      </div>
+    </div>
+
+    <div class="home-shortcut-steps" id="hs-android">
+      <div class="hs-step">
+        <div class="hs-step-num">1</div>
+        <div>Apri <strong>Chrome</strong> e vai su questo indirizzo</div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">2</div>
+        <div>Tocca il menu <strong>⋮</strong> in alto a destra</div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">3</div>
+        <div>Tocca <strong>"Aggiungi a schermata Home"</strong></div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">4</div>
+        <div>Conferma — l'icona MP apparirà sulla schermata</div>
+      </div>
+    </div>
+
+    <div class="home-shortcut-steps" id="hs-desktop">
+      <div class="hs-step">
+        <div class="hs-step-num">1</div>
+        <div>Apri <strong>Chrome</strong> o <strong>Edge</strong></div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">2</div>
+        <div>Clicca l'icona <strong>⊕</strong> nella barra dell'indirizzo (o dal menu del browser)</div>
+      </div>
+      <div class="hs-step">
+        <div class="hs-step-num">3</div>
+        <div>Seleziona <strong>"Installa"</strong> o <strong>"Aggiungi a schermata Home"</strong></div>
+      </div>
+    </div>
+
+    <button class="home-shortcut-close" onclick="closeHomeShortcut()">Chiudi</button>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="footer-brand">
     <div class="footer-brand-name" style="font-size:var(--text-sm)">PRAGMA <span>PROMPT OS</span></div>
-    <div class="footer-version" id="footer-version">v1.1.8-dev</div>
+    <div class="footer-version" id="footer-version">v1.3-dev</div>
   </div>
   <div class="footer-links">
     <a class="footer-link" href="https://maestropratico.com" target="_blank" rel="noopener">🌐 maestropratico.com</a>
     <a class="footer-link" href="mailto:maestropratico@gmail.com">✉ maestropratico@gmail.com</a>
   </div>
   <a class="btn-feedback" id="feedback-btn"
-     href="mailto:maestropratico@gmail.com?subject=PRAGMA%20Prompt%20OS%20-%20Feedback&body=Versione%3A%20v1.1.8-dev%0ADispositivo%3A%20%0ABrowser%3A%20%0A%0AProblema%20riscontrato%3A%20%0A%0ASuggerimento%3A%20">
+     href="mailto:maestropratico@gmail.com?subject=PRAGMA%20Prompt%20OS%20-%20Feedback&body=Versione%3A%20v1.3-dev%0ADispositivo%3A%20%0ABrowser%3A%20%0A%0AProblema%20riscontrato%3A%20%0A%0ASuggerimento%3A%20">
     ✉ Invia feedback
   </a>
   <!-- Sostieni: attivare link dopo decisione fiscale (PayPal.Me o Ko-fi) -->
@@ -1680,7 +1855,7 @@ function exportPrompt() {
   const filename = `PRAGMA_prompt_${ts}.${format}`;
   let content = completo;
   if (format==='md') {
-    content = `# Prompt generato da PRAGMA Prompt OS v1.1.8-dev\n_${new Date().toLocaleString('it-IT')}_\n\n---\n\n` + completo;
+    content = `# Prompt generato da PRAGMA Prompt OS v1.3-dev\n_${new Date().toLocaleString('it-IT')}_\n\n---\n\n` + completo;
   }
   const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
   const a = document.createElement('a');
@@ -1782,6 +1957,42 @@ function initFeedbackLink() {
   const fv = document.getElementById('footer-version');
   if (fv) fv.textContent = version;
 }
+
+// ── DS-006: HOME SHORTCUT ────────────────────────────────────────────────
+// Pulsante sempre visibile. Al click rileva il dispositivo e apre la tab corretta.
+
+function _detectHsTab() {
+  const ua = navigator.userAgent;
+  if (/iphone|ipad|ipod/i.test(ua) && !window.MSStream) return 'ios';
+  if (/android/i.test(ua)) return 'android';
+  return 'desktop';
+}
+
+function openHomeShortcut() {
+  const overlay = document.getElementById('hs-overlay');
+  if (!overlay) return;
+  const tab = _detectHsTab();
+  const tabBtn = document.querySelector(`.hs-tab[onclick*="${tab}"]`);
+  if (tabBtn) switchHsTab(tab, tabBtn);
+  overlay.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHomeShortcut() {
+  document.getElementById('hs-overlay')?.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function switchHsTab(tab, btn) {
+  document.querySelectorAll('.hs-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.home-shortcut-steps').forEach(s => s.classList.remove('visible'));
+  if (btn) btn.classList.add('active');
+  document.getElementById(`hs-${tab}`)?.classList.add('visible');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeHomeShortcut();
+});
 
 // ── BOOT ──────────────────────────────────────────────────────────────────
 function restoreFromStorage() {
