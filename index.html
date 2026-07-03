@@ -521,6 +521,50 @@
     padding: 5px 12px; border-radius: var(--radius-2xl);
     border: 1px solid; opacity: .8;
   }
+  /* UX-014: home-how (sezione Come funziona) */
+  .home-tagline {
+    font-size: var(--text-body); color: var(--muted);
+    max-width: 440px; line-height: 1.7; margin-top: var(--space-3);
+    border-left: 3px solid var(--c4); padding-left: var(--space-6);
+  }
+  .home-how {
+    margin-top: var(--space-10); width: 100%; max-width: 480px;
+  }
+  .home-how-title {
+    font-family: var(--mono); font-size: var(--text-sm);
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: .1em; margin-bottom: var(--space-7);
+  }
+  .home-how-steps { display: flex; flex-direction: column; gap: var(--space-5); }
+  .home-how-step {
+    display: flex; gap: var(--space-6); align-items: flex-start;
+  }
+  .home-how-num {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    background: var(--c4); color: var(--bg);
+    font-family: var(--mono); font-size: var(--text-md); font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  [data-theme="light"] .home-how-num { color: #FFFFFF; }
+  .home-how-step-text {
+    font-size: var(--text-base); color: var(--text); line-height: 1.6;
+    padding-top: 4px;
+  }
+  .home-how-step-text strong { color: var(--c4); }
+  .home-how-arrow {
+    font-size: var(--text-sm); color: var(--muted);
+    padding-left: 48px; margin: var(--space-1) 0;
+  }
+  .home-trust {
+    display: flex; gap: var(--space-8); flex-wrap: wrap; justify-content: center;
+    margin-top: var(--space-9);
+  }
+  .home-trust-item {
+    font-size: var(--text-sm); color: var(--muted);
+    display: flex; align-items: center; gap: var(--space-3);
+  }
+  .home-trust-item::before { content: "✓"; color: var(--c2); font-weight: 700; }
+
   .home-cta {
     display: flex; gap: var(--space-6); flex-wrap: wrap; justify-content: center;
     margin-top: 8px;
@@ -544,6 +588,47 @@
   }
 
   /* SEC-002: toast + avviso dati sensibili + cancella dati */
+  /* Export modal — sostituisce confirm() nativo */
+  .export-modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.6); z-index: 600;
+    align-items: center; justify-content: center; padding: var(--space-8);
+  }
+  .export-modal-overlay.visible { display: flex; }
+  .export-modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: var(--space-10);
+    max-width: 320px; width: 100%;
+    box-shadow: 0 24px 48px rgba(0,0,0,.4);
+  }
+  .export-modal-title {
+    font-size: var(--text-lg); font-weight: 700; color: var(--text);
+    margin-bottom: var(--space-4);
+  }
+  .export-modal-sub {
+    font-size: var(--text-sm); color: var(--muted);
+    margin-bottom: var(--space-8); line-height: 1.5;
+  }
+  .export-modal-btns {
+    display: flex; flex-direction: column; gap: var(--space-4);
+  }
+  .export-btn-fmt {
+    font-family: var(--mono); font-size: var(--text-base); font-weight: 700;
+    padding: 12px; border-radius: var(--radius-md); cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: var(--text); transition: background .15s, border-color .15s;
+    min-height: 44px;
+  }
+  .export-btn-fmt:hover { background: var(--c1); border-color: var(--c1); color: white; }
+  .export-btn-cancel {
+    font-family: var(--mono); font-size: var(--text-sm);
+    padding: 10px; border-radius: var(--radius-md); cursor: pointer;
+    border: 1px solid transparent; background: none;
+    color: var(--muted); margin-top: var(--space-2);
+    min-height: 44px; transition: color .15s;
+  }
+  .export-btn-cancel:hover { color: var(--text); }
+
   .export-toast {
     position: fixed; bottom: var(--space-10); left: 50%;
     transform: translateX(-50%) translateY(10px);
@@ -895,21 +980,58 @@
   <div id="step-home">
     <div class="home-hero">
       <div class="home-logo">PRAGMA Prompt OS</div>
-      <div class="home-title">Costruisci prompt di qualità senza conoscere il prompt engineering.</div>
-      <div class="home-sub">Rispondi a domande semplici. Il sistema costruisce il prompt usando il Framework Diagnostico in 5 blocchi.</div>
-      <div class="home-blocks">
+
+      <!-- UX-014 DEC-020: titolo orientato al valore -->
+      <div class="home-title">Costruisci prompt migliori,<br>passo dopo passo.</div>
+
+      <!-- UX-014 DEC-020: frase distintiva approvata -->
+      <div class="home-tagline">Non genera prompt al posto tuo. Ti guida a costruire richieste complete, passo dopo passo, che potrai usare con ChatGPT, Claude, Gemini, Perplexity e altri modelli AI.</div>
+
+      <!-- UX-014 DEC-021: CTA con label più immediata per utenti non tecnici -->
+      <div class="home-cta">
+        <button class="btn-cta btn-cta-primary" onclick="startWizard()">Crea il tuo Prompt →</button>
+        <button class="btn-cta btn-cta-secondary" onclick="loadExisting()">MODIFICA ESISTENTE</button>
+      </div>
+
+      <!-- UX-014: Come funziona — 3 passi -->
+      <div class="home-how">
+        <div class="home-how-title">Come funziona</div>
+        <div class="home-how-steps">
+          <div class="home-how-step">
+            <div class="home-how-num">1</div>
+            <div class="home-how-step-text">Descrivi <strong>cosa vuoi ottenere</strong> rispondendo a domande semplici</div>
+          </div>
+          <div class="home-how-arrow">↓</div>
+          <div class="home-how-step">
+            <div class="home-how-num">2</div>
+            <div class="home-how-step-text">PRAGMA analizza la <strong>completezza della richiesta</strong> e segnala eventuali informazioni mancanti</div>
+          </div>
+          <div class="home-how-arrow">↓</div>
+          <div class="home-how-step">
+            <div class="home-how-num">3</div>
+            <div class="home-how-step-text">Copia il <strong>prompt finale</strong> e aprilo con la tua IA preferita</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UX-014: trust bar -->
+      <div class="home-trust">
+        <div class="home-trust-item">Nessun account</div>
+        <div class="home-trust-item">Nessun dato inviato ai server</div>
+        <div class="home-trust-item">Funziona nel browser</div>
+      </div>
+
+      <!-- Blocchi Framework (ridotti a badge discreti) -->
+      <div class="home-blocks" style="margin-top:var(--space-9);opacity:.7">
         <div class="home-block-badge" style="color:var(--c1);border-color:var(--c1)">🟦 Specifica</div>
         <div class="home-block-badge" style="color:var(--c2);border-color:var(--c2)">🟩 Controllo</div>
         <div class="home-block-badge" style="color:var(--c3);border-color:var(--c3)">🟨 Orientamento</div>
         <div class="home-block-badge" style="color:var(--c4);border-color:var(--c4)">🟧 Esempi</div>
         <div class="home-block-badge" style="color:var(--c5);border-color:var(--c5)">🟪 Contesto</div>
       </div>
-      <div class="home-cta">
-        <button class="btn-cta btn-cta-primary" onclick="startWizard()">CREA NUOVO PROMPT →</button>
-        <button class="btn-cta btn-cta-secondary" onclick="loadExisting()">MODIFICA ESISTENTE</button>
-      </div>
-      <!-- SEC-001: disclaimer privacy dispositivo condiviso -->
-      <div class="home-privacy">🔒 Privacy: i dati che inserisci restano nel tuo browser e non vengono inviati a server esterni. Se usi un dispositivo condiviso, ricordati di fare Reset al termine.</div>
+
+      <!-- SEC-001: disclaimer privacy -->
+      <div class="home-privacy">🔒 I dati che inserisci restano nel tuo browser e non vengono inviati a server esterni. Se usi un dispositivo condiviso, ricordati di fare Reset al termine.</div>
     </div>
   </div>
 
@@ -1300,6 +1422,19 @@
 </div><!-- /main -->
 
 <!-- FOOTER -->
+<!-- Export modal: 3 pulsanti chiari (.md / .txt / Annulla) -->
+<div class="export-modal-overlay" id="export-modal-overlay" onclick="if(event.target===this)closeExportModal()">
+  <div class="export-modal">
+    <div class="export-modal-title">↓ Esporta prompt</div>
+    <div class="export-modal-sub">Scegli il formato del file da scaricare.</div>
+    <div class="export-modal-btns">
+      <button class="export-btn-fmt" onclick="doExport('md')">Salva come .md</button>
+      <button class="export-btn-fmt" onclick="doExport('txt')">Salva come .txt</button>
+      <button class="export-btn-cancel" onclick="closeExportModal()">Annulla</button>
+    </div>
+  </div>
+</div>
+
 <!-- SEC-002: toast export/cancella -->
 <div class="export-toast" id="export-toast">✓ File esportato</div>
 
@@ -1886,14 +2021,20 @@ function copyOutput(id, btn) {
 }
 
 function exportPrompt() {
-  // Esporta il prompt completo visibile come .txt e come .md
+  // Apre pannello scelta formato invece del confirm() nativo
   collectState();
   const completo = document.getElementById('output-completo')?.textContent;
   if (!completo || !completo.trim()) {
     alert('Genera prima il prompt (completa il wizard e clicca "Genera Prompt").');
     return;
   }
-  const format = confirm('Clicca OK per esportare come .md\nClicca Annulla per esportare come .txt') ? 'md' : 'txt';
+  document.getElementById('export-modal-overlay')?.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function doExport(format) {
+  closeExportModal();
+  const completo = document.getElementById('output-completo')?.textContent || '';
   const ts = new Date().toISOString().slice(0,16).replace('T','_').replace(':','');
   const filename = `PRAGMA_prompt_${ts}.${format}`;
   let content = completo;
@@ -1908,6 +2049,11 @@ function exportPrompt() {
   URL.revokeObjectURL(a.href);
   const t = document.getElementById('export-toast');
   if (t) { t.textContent = '\u2713 File esportato'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+}
+
+function closeExportModal() {
+  document.getElementById('export-modal-overlay')?.classList.remove('visible');
+  document.body.style.overflow = '';
 }
 
 function resetAll() {
@@ -2052,7 +2198,7 @@ function switchHsTab(tab, btn) {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeHomeShortcut();
+  if (e.key === 'Escape') { closeHomeShortcut(); closeExportModal(); }
 });
 
 // ── BOOT ──────────────────────────────────────────────────────────────────
