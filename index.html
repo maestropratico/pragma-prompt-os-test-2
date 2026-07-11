@@ -2011,6 +2011,10 @@ function generateOutput() {
           if (selected.includes('checklist')) {
             mdText = mdText.replace(/\n- usa la sintassi Markdown standard per checklist[^;]*;/, '');
           }
+          // Se Elenco puntato è selezionato, omette la riga sugli elenchi dal companion Markdown
+          if (selected.includes('elenco puntato')) {
+            mdText = mdText.replace(/\n- elenchi con[^;]*;/, '');
+          }
           return mdText;
         }).filter(Boolean);
         full += parts.join('\n\n') + '\n\n';
