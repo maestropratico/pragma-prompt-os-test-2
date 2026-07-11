@@ -906,7 +906,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-logo">PRAGMA <span>PROMPT OS</span></div>
-  <div class="topbar-version" style="font-size:var(--text-sm);color:var(--muted)">Release Candidate: v1.2 RC1</div>
+  <div class="topbar-version" style="font-size:var(--text-sm);color:var(--muted)">Test Build: v1.3-dev</div>
 
   <!-- Desktop controls -->
   <div class="topbar-desktop">
@@ -1058,10 +1058,10 @@
         <div class="opt-icon">🌐</div><div class="opt-label">Tradurre</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Studiare/spiegare">
-        <div class="opt-icon">📚</div><div class="opt-label">Studiare</div>
+        <div class="opt-icon">📚</div><div class="opt-label">Spiegare</div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Fare brainstorming">
-        <div class="opt-icon">💡</div><div class="opt-label">Brainstorm</div>
+      <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Brainstorming">
+        <div class="opt-icon">💡</div><div class="opt-label">Brainstorming</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Riassumere">
         <div class="opt-icon">📝</div><div class="opt-label">Riassumere</div>
@@ -1514,14 +1514,14 @@
 <footer class="site-footer">
   <div class="footer-brand">
     <div class="footer-brand-name" style="font-size:var(--text-sm)">PRAGMA <span>PROMPT OS</span></div>
-    <div class="footer-version" id="footer-version">v1.2 RC1</div>
+    <div class="footer-version" id="footer-version">v1.3-dev</div>
   </div>
   <div class="footer-links">
     <a class="footer-link" href="https://maestropratico.com" target="_blank" rel="noopener">🌐 maestropratico.com</a>
     <a class="footer-link" href="mailto:maestropratico@gmail.com">✉ maestropratico@gmail.com</a>
   </div>
   <a class="btn-feedback" id="feedback-btn"
-     href="mailto:maestropratico@gmail.com?subject=PRAGMA%20Prompt%20OS%20-%20Feedback&body=Versione%3A%20v1.2%20RC1%0ADispositivo%3A%20%0ABrowser%3A%20%0A%0AProblema%20riscontrato%3A%20%0A%0ASuggerimento%3A%20">
+     href="mailto:maestropratico@gmail.com?subject=PRAGMA%20Prompt%20OS%20-%20Feedback&body=Versione%3A%20v1.3-dev%0ADispositivo%3A%20%0ABrowser%3A%20%0A%0AProblema%20riscontrato%3A%20%0A%0ASuggerimento%3A%20">
     ✉ Invia feedback
   </a>
   <!-- Sostieni: attivare link dopo decisione fiscale (PayPal.Me o Ko-fi) -->
@@ -1879,12 +1879,90 @@ function generateOutput() {
     full += '\n';
   }
 
-  // output
+  // ── OUTPUT: mappa formato, ordine canonico, compatibilità ──────────────
+  const FMT_ORDER = [
+    'risposta breve e diretta',
+    'testo narrativo',
+    'elenco puntato',
+    'checklist',
+    'tabella',
+    'Markdown',
+    'JSON',
+    'codice'
+  ];
+
+  // Formati "contenitore esclusivo": se selezionati, gli altri formati
+  // diventano descrizioni di struttura interna, non strutture parallele
+  const FMT_EXCLUSIVE = {
+    'JSON': {
+      container: 'Produci la risposta in formato JSON valido. Chiavi in camelCase o snake_case coerenti. Nessun testo fuori dal blocco JSON.',
+      companions: {
+        'testo narrativo':          'I valori stringa devono essere testo narrativo ben scritto.',
+        'elenco puntato':           'Usa array JSON per rappresentare elenchi strutturati.',
+        'checklist':                'Rappresenta la checklist come array di oggetti con campi "task" (string) e "done" (boolean).',
+        'tabella':                  'Rappresenta le tabelle come array di oggetti con chiavi uniformi.',
+        'Markdown':                 'I valori stringa possono contenere Markdown, dichiaralo con il campo "format": "markdown".',
+        'risposta breve e diretta': 'La struttura JSON deve essere minimale: solo i campi strettamente necessari.',
+        'codice':                   'Inserisci il codice in un campo stringa dedicato, ad esempio: { "language": "...", "code": "..." }.'
+      }
+    },
+    'codice': {
+      container: 'Produci codice funzionante e direttamente eseguibile. Specifica il linguaggio nel blocco. Includi commenti sulle parti non ovvie.',
+      companions: {
+        'testo narrativo':       'Aggiungi una breve spiegazione testuale prima o dopo il blocco di codice.',
+        'Markdown':              'Avvolgi il codice in un documento Markdown con spiegazione e blocco di codice etichettato.',
+        'risposta breve e diretta': 'Codice essenziale senza scaffolding inutile. Solo il necessario.'
+      }
+    }
+  };
+
+  const FMT_MAP = {
+    'risposta breve e diretta': 'Vai direttamente al punto senza preamboli o conclusioni ridondanti. Ogni frase deve aggiungere informazione nuova.',
+    'testo narrativo':          'Struttura la risposta in paragrafi continui e ben collegati. Usa un registro appropriato al destinatario.',
+    'elenco puntato':           'Organizza la risposta come elenco strutturato. Ogni voce deve essere autonoma e comprensibile senza contesto aggiuntivo.',
+    'checklist':                'Includi una checklist operativa. Usa il formato "- [ ] Azione" per ogni voce verificabile.',
+    'tabella':                  'Usa tabelle solo quando migliorano il confronto tra elementi. Intestazioni chiare, una riga per elemento.',
+    'Markdown':                 'Produci l\'intera risposta in Markdown valido, copiabile direttamente in un file ".md".\nUsa: titoli # ## ###, elenchi con "-", checklist con "- [ ]", tabelle Markdown se utili, ">" per avvertenze, blocchi di codice per schemi.\nNessun HTML, nessuna immagine, nessun widget proprietario.\nLa risposta deve potersi salvare senza modifiche come ".md".',
+    'JSON':                     'Produci la risposta in formato JSON valido. Chiavi in camelCase o snake_case coerenti. Nessun testo fuori dal blocco JSON.',
+    'codice':                   'Produci codice funzionante e direttamente eseguibile. Specifica il linguaggio nel blocco. Includi commenti sulle parti non ovvie.'
+  };
+
   if (state.output.length>0 || state.outputLength) {
     full += `## OUTPUT RICHIESTO\n`;
-    if (state.output.length>0) full += `Formato: ${state.output.join(', ')}.\n`;
-    if (state.outputLength) full += `Lunghezza: ${state.outputLength}.\n`;
-    full += '\n';
+
+    if (state.output.length>0) {
+      // Ordina la lista dei formati secondo FMT_ORDER (canonico)
+      const selected = FMT_ORDER.filter(f => state.output.includes(f));
+
+      // Lista formati in ordine canonico
+      full += `Formato:\n${selected.map(f => `- ${f}`).join('\n')}\n\n`;
+
+      // Determina se è presente un formato contenitore esclusivo
+      const exclusiveKey = Object.keys(FMT_EXCLUSIVE).find(k => selected.includes(k));
+
+      full += `## FORMATO DI OUTPUT OBBLIGATORIO\n\n`;
+
+      if (exclusiveKey) {
+        // Modalità contenitore: istruzione principale + adattamenti compagni
+        const excl = FMT_EXCLUSIVE[exclusiveKey];
+        full += excl.container + '\n\n';
+        const companions = selected.filter(f => f !== exclusiveKey);
+        if (companions.length > 0) {
+          full += `Struttura interna:\n`;
+          companions.forEach(f => {
+            const note = excl.companions[f];
+            if (note) full += `- ${note}\n`;
+          });
+          full += '\n';
+        }
+      } else {
+        // Modalità composita: istruzioni ordinate, una specifica coerente
+        const parts = selected.map(f => FMT_MAP[f]).filter(Boolean);
+        full += parts.join('\n\n') + '\n\n';
+      }
+    }
+
+    if (state.outputLength) full += `Lunghezza massima:\n${state.outputLength}.\n\n`;
   }
 
   // audience / level
@@ -2230,8 +2308,10 @@ function restoreFromStorage() {
     if (s.outputLength) document.getElementById('output-length').value = s.outputLength;
     if (s.level) { document.getElementById('level-slider').value = s.level; updateLevelLabel(); }
     if (s.contextText) document.getElementById('context-text').value = s.contextText;
-    // Ripristina selezioni card — task
-    s.task?.forEach(val => {
+    // Ripristina selezioni card — task (con migrazione data-val legacy)
+    const TASK_VAL_MIGRATION = { 'Fare brainstorming': 'Brainstorming' };
+    s.task?.forEach(oldVal => {
+      const val = TASK_VAL_MIGRATION[oldVal] || oldVal;
       document.querySelectorAll('#task-options .opt-card').forEach(c=>{ if(c.dataset.val===val) c.classList.add('selected'); });
     });
     s.output?.forEach(val => {
