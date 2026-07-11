@@ -2463,12 +2463,14 @@ function restoreFromStorage() {
             div.innerHTML = `
               <div>
                 <div class="fewshot-label">INPUT (esempio ${n})</div>
-                <textarea class="fewshot-input" rows="2" placeholder="Testo di input...">${pair.input || ''}</textarea>
+                <textarea class="fs-input" rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()"></textarea>
               </div>
               <div>
                 <div class="fewshot-label">OUTPUT atteso</div>
-                <textarea class="fewshot-output" rows="2" placeholder="Output atteso...">${pair.output || ''}</textarea>
+                <textarea class="fs-output" rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()"></textarea>
               </div>`;
+            div.querySelector('.fs-input').value = pair.input || '';
+            div.querySelector('.fs-output').value = pair.output || '';
             container.appendChild(div);
           });
         }
