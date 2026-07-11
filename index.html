@@ -1999,7 +1999,20 @@ function generateOutput() {
         }
       } else {
         // Modalità composita: istruzioni ordinate, una specifica coerente
-        const parts = selected.map(f => FMT_MAP[f]).filter(Boolean);
+        // Companion Markdown contestuale: rimuove regole già coperte da altri formati selezionati
+        const parts = selected.map(f => {
+          if (f !== 'Markdown') return FMT_MAP[f];
+          let mdText = FMT_MAP['Markdown'];
+          // Se Tabella è selezionata, omette la riga sulle tabelle dal companion Markdown
+          if (selected.includes('tabella')) {
+            mdText = mdText.replace(/\n- tabelle Markdown[^;]*;/, '');
+          }
+          // Se Checklist è selezionata, omette la riga sulla checklist dal companion Markdown
+          if (selected.includes('checklist')) {
+            mdText = mdText.replace(/\n- usa la sintassi Markdown standard per checklist[^;]*;/, '');
+          }
+          return mdText;
+        }).filter(Boolean);
         full += parts.join('\n\n') + '\n\n';
       }
     }
