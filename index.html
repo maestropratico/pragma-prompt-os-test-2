@@ -1615,6 +1615,7 @@ function initSidebar() {
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
 let currentStep = 0;
+let restoredStep = 1; // BUG-R3-002: step da ripristinare al boot
 
 function startWizard() {
   document.getElementById('step-home').classList.add('hide');
@@ -2386,7 +2387,10 @@ function restoreFromStorage() {
     const data = JSON.parse(saved);
     if (!data || !data.state) return false;
     const s = data.state;
-    // BUG-R3-001: ripristina se esiste qualsiasi dato significativo
+    // BUG-R3-002: legge lo step salvato con fallback sicuro
+    restoredStep = (Number.isInteger(data.step) && data.step >= 1 && data.step <= 8)
+      ? data.step : 1;
+    // BUG-R3-001 + BUG-R3-004: ripristina se esiste qualsiasi dato significativo (non default)
     const hasMeaningfulData =
       s.task?.length ||
       s.output?.length ||
@@ -2394,7 +2398,14 @@ function restoreFromStorage() {
       s.quality?.length ||
       s.taskDesc?.trim().length > 0 ||
       s.contextText?.trim().length > 0 ||
-      s.fewshot?.length;
+      s.fewshot?.length ||
+      s.role ||
+      s.audience ||
+      s.level !== 3 ||
+      s.revision !== 'standard' ||
+      s.outputLength?.trim().length > 0 ||
+      s.contextUse ||
+      s.fewshotMode === 'yes';
     if (!hasMeaningfulData) return false;
     if (!confirm('Trovato un prompt salvato. Vuoi ripristinarlo?')) {
       localStorage.removeItem(LS_KEY);
@@ -2437,7 +2448,31 @@ function restoreFromStorage() {
       document.querySelectorAll('#fewshot-mode-options .opt-card').forEach(c=>c.classList.remove('selected'));
       document.querySelectorAll('#fewshot-mode-options .opt-card').forEach(c=>{ if(c.dataset.val===s.fewshotMode) c.classList.add('selected'); });
       state.fewshotMode = s.fewshotMode;
-      if (s.fewshotMode==='yes') document.getElementById('fewshot-section').style.display='block';
+      if (s.fewshotMode==='yes') {
+        document.getElementById('fewshot-section').style.display='block';
+        // BUG-R3-003: ricostruisce le coppie few-shot nel DOM
+        const container = document.getElementById('fewshot-pairs');
+        if (container) {
+          container.innerHTML = ''; // svuota coppie preesistenti
+          const pairs = (s.fewshot && s.fewshot.length > 0) ? s.fewshot : [{input:'', output:''}];
+          pairs.forEach((pair, idx) => {
+            const n = idx + 1;
+            const div = document.createElement('div');
+            div.className = 'fewshot-pair';
+            div.dataset.pair = n;
+            div.innerHTML = `
+              <div>
+                <div class="fewshot-label">INPUT (esempio ${n})</div>
+                <textarea class="fewshot-input" rows="2" placeholder="Testo di input...">${pair.input || ''}</textarea>
+              </div>
+              <div>
+                <div class="fewshot-label">OUTPUT atteso</div>
+                <textarea class="fewshot-output" rows="2" placeholder="Output atteso...">${pair.output || ''}</textarea>
+              </div>`;
+            container.appendChild(div);
+          });
+        }
+      }
     }
     return true;
   } catch(e) { return false; }
@@ -2457,7 +2492,7 @@ setTimeout(() => {
 const restored = restoreFromStorage();
 if (restored) {
   document.getElementById('step-home').classList.add('hide');
-  goTo(1);
+  goTo(restoredStep); // BUG-R3-002: ripristina la scheda corretta
 } else {
   updateScore();
 }
