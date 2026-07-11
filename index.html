@@ -1939,7 +1939,7 @@ function generateOutput() {
   // diventano descrizioni di struttura interna, non strutture parallele
   const FMT_EXCLUSIVE = {
     'JSON': {
-      container: 'Produci la risposta in formato JSON valido. Usa una sola convenzione per tutte le chiavi: camelCase oppure snake_case. Nessun testo fuori dal blocco JSON.',
+      container: 'Produci la risposta in formato JSON valido. Usa una sola convenzione per tutte le chiavi: camelCase oppure snake_case. L\'output deve contenere esclusivamente il documento JSON.',
       companions: {
         'testo narrativo':          'I valori stringa devono essere testo narrativo ben scritto.',
         'elenco puntato':           'Usa array JSON per rappresentare elenchi strutturati.',
@@ -1967,7 +1967,7 @@ function generateOutput() {
     'checklist':                'Produci una checklist operativa. Ogni voce deve rappresentare un\'azione verificabile nel formato:\n- [ ] Azione',
     'tabella':                  'Usa una o più tabelle. Intestazioni esplicite, una riga per elemento. Aggiungi testo solo se necessario alla comprensione.',
     'Markdown':                 'Produci la risposta in Markdown valido, salvabile direttamente come file ".md".\nStruttura:\n- titoli `#`, `##`, `###` per la gerarchia;\n- elenchi con `-`;\n- checklist con `- [ ]`;\n- tabelle Markdown quando migliorano realmente il confronto;\n- blocchi di citazione `>` per avvertenze;\n- blocchi di codice con linguaggio specificato.\nNessun HTML, nessuna immagine, nessun elemento non compatibile con Markdown standard.',
-    'JSON':                     'Produci la risposta in formato JSON valido. Usa una sola convenzione per tutte le chiavi: camelCase oppure snake_case. Nessun testo fuori dal blocco JSON.',
+    'JSON':                     'Produci la risposta in formato JSON valido. Usa una sola convenzione per tutte le chiavi: camelCase oppure snake_case. L\'output deve contenere esclusivamente il documento JSON.',
     'codice':                   'Produci codice funzionante e direttamente eseguibile. Specifica il linguaggio nel blocco di codice. Inserisci commenti solo dove migliorano realmente la comprensione.'
   };
 
