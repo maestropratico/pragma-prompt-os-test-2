@@ -1910,7 +1910,7 @@ function generateOutput() {
       container: 'Produci codice funzionante e direttamente eseguibile. Specifica il linguaggio nel blocco. Includi commenti sulle parti non ovvie.',
       companions: {
         'testo narrativo':       'Aggiungi una breve spiegazione testuale prima o dopo il blocco di codice.',
-        'Markdown':              'Avvolgi il codice in un documento Markdown strutturato come segue:\n- Breve introduzione.\n- Spiegazione della soluzione.\n- Blocco di codice con il linguaggio specificato (es. \`\`\`python).\n- Eventuali note finali.\nInserisci commenti nel codice solo quando migliorano la comprensione.',
+        'Markdown':              'Il codice deve essere inserito in un documento Markdown.\nStruttura del documento:\n1. Breve introduzione.\n2. Spiegazione della soluzione adottata.\n3. Blocco di codice con linguaggio specificato (es. \`\`\`python).\n4. Eventuali note finali.\nInserisci commenti nel codice solo quando migliorano realmente la comprensione.',
         'risposta breve e diretta': 'Codice essenziale senza scaffolding inutile. Solo il necessario.'
       }
     }
@@ -1943,17 +1943,15 @@ function generateOutput() {
       full += `## FORMATO DI OUTPUT OBBLIGATORIO\n\n`;
 
       if (exclusiveKey) {
-        // Modalità contenitore: istruzione principale + adattamenti compagni
+        // Modalità contenitore: istruzione principale + companion come testo continuo
         const excl = FMT_EXCLUSIVE[exclusiveKey];
         full += excl.container + '\n\n';
         const companions = selected.filter(f => f !== exclusiveKey);
         if (companions.length > 0) {
-          full += `Struttura interna:\n`;
           companions.forEach(f => {
             const note = excl.companions[f];
-            if (note) full += `- ${note}\n`;
+            if (note) full += note + '\n\n';
           });
-          full += '\n';
         }
       } else {
         // Modalità composita: istruzioni ordinate, una specifica coerente
