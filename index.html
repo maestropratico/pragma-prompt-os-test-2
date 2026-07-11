@@ -657,6 +657,39 @@
   }
   .btn-clear-data:hover { background: #ef4444; color: white; }
 
+  /* UX-NAV-TOP — navigazione superiore del wizard */
+  .step-nav-top {
+    position: sticky;
+    top: 57px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin: -12px 0 var(--space-8);
+    padding: var(--space-4) 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .step-nav-top[hidden] { display: none; }
+
+  @media (max-width: 700px) {
+    .step-nav-top {
+      top: 56px;
+      margin: -8px 0 var(--space-7);
+      padding: var(--space-4) 0;
+    }
+    .step-nav-top .btn-nav {
+      min-height: 44px;
+      padding: 9px 12px;
+      font-size: var(--text-sm);
+    }
+    .step-nav-top .step-counter {
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+
   /* ── DS-006: HOME SHORTCUT ── */
   .btn-home-shortcut {
     font-family: var(--mono); font-size: var(--text-sm); font-weight: 600;
@@ -975,6 +1008,12 @@
 
 <!-- WIZARD CONTENT -->
 <div class="wizard">
+<!-- UX-NAV-TOP — navigazione schede sempre disponibile -->
+<div class="step-nav-top" id="step-nav-top" hidden>
+  <button class="btn-nav btn-prev" id="top-prev" type="button" onclick="goToPreviousStep()">← Indietro</button>
+  <span class="step-counter" id="top-step-counter">Scheda 1 di 8</span>
+  <button class="btn-nav btn-next" id="top-next" type="button" onclick="goToNextStep()">Avanti →</button>
+</div>
 
   <!-- HOME -->
   <div id="step-home">
@@ -1646,6 +1685,8 @@ function goTo(n) {
       if (target) target.focus({ preventScroll: true });
     }, 120);
   }
+  // UX-NAV-TOP: aggiorna barra navigazione sticky
+  updateTopStepNav();
 }
 
 function highlightSidebar(stepNum) {
@@ -1861,6 +1902,9 @@ function updateScore() {
 
 // ── GENERATE ──────────────────────────────────────────────────────────────
 function generateOutput() {
+  // UX-NAV-TOP: nasconde barra durante l'output
+  const navTop = document.getElementById('step-nav-top');
+  if (navTop) navTop.hidden = true;
   collectState();
 
   // — PROMPT COMPLETO —
@@ -2240,6 +2284,44 @@ function clearLocalData() {
     t.textContent = '✓ Dati cancellati';
     t.classList.add('show');
     setTimeout(() => { t.classList.remove('show'); setTimeout(() => { t.textContent = '✓ File esportato'; }, 300); }, 2500);
+  }
+}
+
+// ── UX-NAV-TOP — barra navigazione sticky ───────────────────────────────
+function goToPreviousStep() {
+  if (currentStep > 1) goTo(currentStep - 1);
+}
+
+function goToNextStep() {
+  if (currentStep < 8) {
+    goTo(currentStep + 1);
+  } else if (currentStep === 8) {
+    generateOutput();
+  }
+}
+
+function updateTopStepNav() {
+  const nav = document.getElementById('step-nav-top');
+  const prev = document.getElementById('top-prev');
+  const next = document.getElementById('top-next');
+  const counter = document.getElementById('top-step-counter');
+
+  if (!nav || currentStep < 1 || currentStep > 8) {
+    if (nav) nav.hidden = true;
+    return;
+  }
+
+  nav.hidden = false;
+  counter.textContent = `Scheda ${currentStep} di 8`;
+  prev.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+
+  if (currentStep === 8) {
+    next.textContent = 'GENERA PROMPT →';
+    next.style.setProperty('--active-color', 'var(--c5)');
+  } else {
+    next.textContent = 'Avanti →';
+    const stepColors = { 1:'var(--c1)', 2:'var(--c1)', 3:'var(--c3)', 4:'var(--c2)', 5:'var(--c1)', 6:'var(--c4)', 7:'var(--c5)' };
+    next.style.setProperty('--active-color', stepColors[currentStep] || 'var(--c1)');
   }
 }
 
