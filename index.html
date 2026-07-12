@@ -1356,7 +1356,7 @@
       <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="Riassumi il testo fornito, poi rispondi alla richiesta">
         <div class="opt-icon">📝</div><div class="opt-label">Riassumi prima</div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="">
+      <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="nessun contesto specifico">
         <div class="opt-icon">—</div><div class="opt-label">Nessun contesto</div>
       </div>
     </div>
@@ -2075,11 +2075,12 @@ function generateOutput() {
   }
 
   // contesto
+  const hasRealContextUse = state.contextUse && state.contextUse !== 'nessun contesto specifico';
   if (state.contextText.trim()) {
     full += `## CONTESTO\n`;
-    if (state.contextUse) full += `Istruzione: ${state.contextUse}\n\n`;
+    if (hasRealContextUse) full += `Istruzione: ${state.contextUse}\n\n`;
     full += `---\n${state.contextText.trim()}\n---\n\n`;
-  } else if (state.contextUse) {
+  } else if (hasRealContextUse) {
     full += `## CONTESTO\n${state.contextUse}\n\n`;
   }
 
