@@ -1783,7 +1783,10 @@ function setFewshotMode(mode, el) {
 function addCustomTag() {
   const inp = document.getElementById('constraint-custom');
   const val = inp.value.trim();
-  if (!val) return;
+  if (!val) {
+    inp.value = '';
+    return;
+  }
   const cloud = document.getElementById('constraint-tags');
   // LIMITE-S5-002: blocco duplicati (case-insensitive)
   const valLower = val.toLowerCase();
