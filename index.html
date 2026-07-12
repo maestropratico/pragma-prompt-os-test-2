@@ -1581,7 +1581,7 @@ const state = {
   fewshot: [],
   fewshotMode: 'no',   // 'yes' | 'no'
   contextText: '', contextUse: '',
-  revision: 'standard'
+  revision: ''
 };
 
 const LS_KEY = 'pragma_prompt_os_v11';
@@ -1841,7 +1841,7 @@ function collectState() {
   const ctxEl = document.querySelector('#context-use-options .selected');
   state.contextUse = ctxEl ? ctxEl.dataset.val : '';
   const revEl = document.querySelector('#revision-options .selected');
-  state.revision = revEl ? revEl.dataset.val : 'standard';
+  state.revision = revEl ? revEl.dataset.val : '';
   // ── localStorage save ──
   try { localStorage.setItem(LS_KEY, JSON.stringify({ state, step: currentStep })); } catch(e) {}
 }
@@ -2417,7 +2417,7 @@ function restoreFromStorage() {
       s.role ||
       s.audience ||
       s.level !== 3 ||
-      s.revision !== 'standard' ||
+      Boolean(s.revision) ||
       s.outputLength?.trim().length > 0 ||
       s.contextUse ||
       s.fewshotMode === 'yes';
