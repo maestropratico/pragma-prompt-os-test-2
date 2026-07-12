@@ -1788,9 +1788,14 @@ function addCustomTag() {
     return;
   }
   const cloud = document.getElementById('constraint-tags');
-  // LIMITE-S5-002: blocco duplicati (case-insensitive)
-  const valLower = val.toLowerCase();
-  const existing = [...cloud.querySelectorAll('.tag-btn')].find(t => (t.dataset.val||'').toLowerCase() === valLower);
+  // LIMITE-S5-002 + BUG-S5-005: blocco duplicati su data-val E su etichetta visibile
+  const normalizeTagText = value => value.trim().toLowerCase().replace(/^[^\p{L}\p{N}]+/u, '').replace(/\s+/g, ' ');
+  const normalizedInput = normalizeTagText(val);
+  const existing = [...cloud.querySelectorAll('.tag-btn')].find(tag => {
+    const canonicalValue = normalizeTagText(tag.dataset.val || '');
+    const visibleLabel = normalizeTagText(tag.textContent || '');
+    return canonicalValue === normalizedInput || visibleLabel === normalizedInput;
+  });
   if (existing) {
     existing.classList.add('active');
     inp.value = '';
@@ -2409,6 +2414,34 @@ function switchHsTab(tab, btn) {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeHomeShortcut(); closeExportModal(); }
+});
+
+// ── UX-KEYBOARD-001 — frecce desktop per navigazione schede ─────────────
+document.addEventListener('keydown', function(event) {
+  if (!window.matchMedia('(min-width: 701px)').matches) return;
+  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+  const target = event.target;
+  const isEditable =
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement ||
+    target instanceof HTMLSelectElement ||
+    target?.isContentEditable;
+  if (isEditable) return;
+
+  const exportModalOpen = document.getElementById('export-modal-overlay')?.classList.contains('visible');
+  const homeShortcutOpen = document.getElementById('hs-overlay')?.classList.contains('visible');
+  const settingsMenuOpen = document.getElementById('settings-menu')?.classList.contains('open');
+  if (exportModalOpen || homeShortcutOpen || settingsMenuOpen) return;
+
+  if (currentStep < 1 || currentStep > 8) return;
+
+  event.preventDefault();
+  if (event.key === 'ArrowLeft') {
+    goToPreviousStep();
+  } else {
+    goToNextStep();
+  }
 });
 
 // ── BOOT ──────────────────────────────────────────────────────────────────
