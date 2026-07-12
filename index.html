@@ -2116,8 +2116,10 @@ function generateOutput() {
     revText = `Ora assumi il ruolo di un revisore critico indipendente.\n\nAnalizza la risposta che hai appena prodotto e:\n1. Identifica tutti gli errori fattuali o logici presenti.\n2. Segnala le ipotesi implicite o non dichiarate.\n3. Individua le omissioni rilevanti rispetto alla richiesta originale.\n4. Proponi una versione corretta e migliorata.\n\nSii sistematico e severo. Il costo di un errore in questo contesto è alto.`;
   } else if (state.revision==='critica') {
     revText = `Rivedi la risposta che hai appena prodotto.\nIndividua: errori, incoerenze, omissioni importanti.\nPoi fornisci la versione migliorata.`;
-  } else {
+  } else if (state.revision==='standard') {
     revText = `[Strategia selezionata: velocità — revisione inclusa nel prompt principale. Nessun turno separato necessario.]`;
+  } else {
+    revText = `[Nessuna strategia di revisione selezionata. Nessun turno separato generato.]`;
   }
   document.getElementById('output-revisione').textContent = revText;
 
