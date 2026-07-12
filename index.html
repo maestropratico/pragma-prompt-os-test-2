@@ -1288,7 +1288,7 @@
       <div class="tag-btn" onclick="toggleTag(this)" data-val="Distingui sempre fatti da ipotesi">Fatti vs ipotesi</div>
     </div>
     <div class="tag-custom-row">
-      <input type="text" id="constraint-custom" placeholder="Aggiungi vincolo personalizzato...">
+      <input type="text" id="constraint-custom" placeholder="Aggiungi vincolo personalizzato..." onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomTag();}">
       <button class="tag-add-btn" onclick="addCustomTag()">+ Aggiungi</button>
     </div>
     <div class="step-nav">
@@ -1785,6 +1785,15 @@ function addCustomTag() {
   const val = inp.value.trim();
   if (!val) return;
   const cloud = document.getElementById('constraint-tags');
+  // LIMITE-S5-002: blocco duplicati (case-insensitive)
+  const valLower = val.toLowerCase();
+  const existing = [...cloud.querySelectorAll('.tag-btn')].find(t => (t.dataset.val||'').toLowerCase() === valLower);
+  if (existing) {
+    existing.classList.add('active');
+    inp.value = '';
+    collectState(); updateScore();
+    return;
+  }
   const tag = document.createElement('div');
   tag.className = 'tag-btn active';
   tag.setAttribute('data-val', val);
