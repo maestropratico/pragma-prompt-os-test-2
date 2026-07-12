@@ -1676,19 +1676,7 @@ function goTo(n) {
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  // UX-002: focus automatico primo campo compilabile (delay post-scroll)
-  const focusMap = {
-    1: '#task-desc',
-    5: '#constraint-custom',
-    7: '#context-text'
-  };
-  const focusSel = focusMap[n];
-  if (focusSel) {
-    setTimeout(() => {
-      const target = document.querySelector(focusSel);
-      if (target) target.focus({ preventScroll: true });
-    }, 120);
-  }
+  // DEC-027: autofocus automatico rimosso — il focus è sempre volontario (click/tap utente)
   // UX-NAV-TOP: aggiorna barra navigazione sticky
   updateTopStepNav();
 }
