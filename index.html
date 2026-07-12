@@ -1234,7 +1234,7 @@
     <div class="info-box" id="info4" style="--active-color:var(--c2)">
       Specificare i criteri di qualità riduce l'ambiguità su cosa significa "risposta corretta". Senza questi criteri, l'IA può produrre output plausibili ma inaffidabili o incompleti. Questo blocco ha uno degli impatti più alti sul risultato finale.
     </div>
-    <button class="select-all-quality-btn" onclick="selectAllQualityChecks()">
+    <button class="select-all-quality-btn" id="quality-toggle-all" type="button" onclick="toggleAllQualityChecks()">
       ✓ Seleziona tutti per aumentare la qualità del prompt
     </button>
     <div class="checks-grid" id="quality-checks" style="--active-color:var(--c2)">
@@ -1733,15 +1733,27 @@ function toggleOpt(el, group, single=false) {
 
 function toggleCheck(el) {
   el.classList.toggle('checked');
+  updateQualityToggleLabel();
   collectState(); updateScore();
 }
 
-function selectAllQualityChecks() {
-  document.querySelectorAll('#quality-checks .check-item').forEach(item => {
-    item.classList.add('checked');
-  });
+function toggleAllQualityChecks() {
+  const items = [...document.querySelectorAll('#quality-checks .check-item')];
+  const allChecked = items.every(item => item.classList.contains('checked'));
+  items.forEach(item => { item.classList.toggle('checked', !allChecked); });
+  updateQualityToggleLabel();
   collectState();
   updateScore();
+}
+
+function updateQualityToggleLabel() {
+  const btn = document.getElementById('quality-toggle-all');
+  if (!btn) return;
+  const items = [...document.querySelectorAll('#quality-checks .check-item')];
+  const allChecked = items.length > 0 && items.every(item => item.classList.contains('checked'));
+  btn.textContent = allChecked
+    ? '✕ Deseleziona tutti'
+    : '✓ Seleziona tutti per aumentare la qualità del prompt';
 }
 
 function toggleTag(el) {
@@ -2444,6 +2456,7 @@ function restoreFromStorage() {
     s.quality?.forEach(val => {
       document.querySelectorAll('#quality-checks .check-item').forEach(c=>{ if(c.dataset.val===val) c.classList.add('checked'); });
     });
+    updateQualityToggleLabel(); // sincronizza etichetta pulsante dopo restore
     s.constraints?.forEach(val => {
       let found = false;
       document.querySelectorAll('#constraint-tags .tag-btn').forEach(t=>{ if(t.dataset.val===val){ t.classList.add('active'); found=true; } });
