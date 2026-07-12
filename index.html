@@ -1168,16 +1168,16 @@
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="esperto del settore">
         <div class="opt-icon">🎓</div><div class="opt-label">Esperto</div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="consulente aziendale">
+      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="consulente del settore">
         <div class="opt-icon">💼</div><div class="opt-label">Consulente</div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="insegnante chiaro e paziente">
+      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="insegnante del settore">
         <div class="opt-icon">🏫</div><div class="opt-label">Insegnante</div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="analista critico">
+      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="analista del settore">
         <div class="opt-icon">🧐</div><div class="opt-label">Analista</div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="assistente operativo">
+      <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="assistente del settore">
         <div class="opt-icon">⚙️</div><div class="opt-label">Assistente</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="nessun ruolo specifico">
@@ -2421,6 +2421,13 @@ function restoreFromStorage() {
     if (s.contextText) document.getElementById('context-text').value = s.contextText;
     // Ripristina selezioni card — task (con migrazione data-val legacy)
     const TASK_VAL_MIGRATION = { 'Fare brainstorming': 'Brainstorming' };
+    // DEC-026: migrazione ruoli legacy
+    const ROLE_VAL_MIGRATION = {
+      'consulente aziendale':          'consulente del settore',
+      'insegnante chiaro e paziente':  'insegnante del settore',
+      'analista critico':              'analista del settore',
+      'assistente operativo':          'assistente del settore',
+    };
     s.task?.forEach(oldVal => {
       const val = TASK_VAL_MIGRATION[oldVal] || oldVal;
       document.querySelectorAll('#task-options .opt-card').forEach(c=>{ if(c.dataset.val===val) c.classList.add('selected'); });
@@ -2428,7 +2435,11 @@ function restoreFromStorage() {
     s.output?.forEach(val => {
       document.querySelectorAll('#output-options .opt-card').forEach(c=>{ if(c.dataset.val===val) c.classList.add('selected'); });
     });
-    if (s.role) document.querySelectorAll('#role-options .opt-card').forEach(c=>{ if(c.dataset.val===s.role) c.classList.add('selected'); });
+    if (s.role) {
+      const migratedRole = ROLE_VAL_MIGRATION[s.role] || s.role;
+      document.querySelectorAll('#role-options .opt-card').forEach(c=>{ if(c.dataset.val===migratedRole) c.classList.add('selected'); });
+      if (ROLE_VAL_MIGRATION[s.role]) state.role = migratedRole; // aggiorna state al nuovo valore
+    }
     if (s.audience) document.querySelectorAll('#audience-options .opt-card').forEach(c=>{ if(c.dataset.val===s.audience) c.classList.add('selected'); });
     s.quality?.forEach(val => {
       document.querySelectorAll('#quality-checks .check-item').forEach(c=>{ if(c.dataset.val===val) c.classList.add('checked'); });
