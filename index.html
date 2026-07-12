@@ -2066,7 +2066,7 @@ function generateOutput() {
   }
 
   // few-shot
-  const validPairs = state.fewshot.filter(p=>p.input&&p.output);
+  const validPairs = state.fewshotMode === 'yes' ? state.fewshot.filter(p=>p.input&&p.output) : [];
   if (validPairs.length>0) {
     full += `## ESEMPI\n`;
     validPairs.forEach((p,i) => {
@@ -2513,31 +2513,38 @@ function restoreFromStorage() {
       document.querySelectorAll('#fewshot-mode-options .opt-card').forEach(c=>c.classList.remove('selected'));
       document.querySelectorAll('#fewshot-mode-options .opt-card').forEach(c=>{ if(c.dataset.val===s.fewshotMode) c.classList.add('selected'); });
       state.fewshotMode = s.fewshotMode;
-      if (s.fewshotMode==='yes') {
-        document.getElementById('fewshot-section').style.display='block';
-        // BUG-R3-003: ricostruisce le coppie few-shot nel DOM
+      // BUG-S6-001: ricostruisce sempre le coppie salvate, indipendentemente dalla modalità.
+      // Il pannello resta visibile solo se fewshotMode==='yes'; i dati restano conservati
+      // anche se l'utente ha scelto "Non necessario", per non perderli se torna su "Sì".
+      document.getElementById('fewshot-section').style.display = (s.fewshotMode==='yes') ? 'block' : 'none';
+      {
         const container = document.getElementById('fewshot-pairs');
         if (container) {
-          container.innerHTML = ''; // svuota coppie preesistenti
-          const pairs = (s.fewshot && s.fewshot.length > 0) ? s.fewshot : [{input:'', output:''}];
-          pairs.forEach((pair, idx) => {
-            const n = idx + 1;
-            const div = document.createElement('div');
-            div.className = 'fewshot-pair';
-            div.dataset.pair = n;
-            div.innerHTML = `
-              <div>
-                <div class="fewshot-label">INPUT (esempio ${n})</div>
-                <textarea class="fs-input" rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()"></textarea>
-              </div>
-              <div>
-                <div class="fewshot-label">OUTPUT atteso</div>
-                <textarea class="fs-output" rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()"></textarea>
-              </div>`;
-            div.querySelector('.fs-input').value = pair.input || '';
-            div.querySelector('.fs-output').value = pair.output || '';
-            container.appendChild(div);
-          });
+          const hasSavedPairs = s.fewshot && s.fewshot.length > 0;
+          // Ricostruisce le coppie salvate se esistono; se la modalità è 'yes' e non
+          // ce ne sono, mostra comunque una coppia vuota pronta per la compilazione.
+          if (hasSavedPairs || s.fewshotMode === 'yes') {
+            container.innerHTML = ''; // svuota coppie preesistenti
+            const pairs = hasSavedPairs ? s.fewshot : [{input:'', output:''}];
+            pairs.forEach((pair, idx) => {
+              const n = idx + 1;
+              const div = document.createElement('div');
+              div.className = 'fewshot-pair';
+              div.dataset.pair = n;
+              div.innerHTML = `
+                <div>
+                  <div class="fewshot-label">INPUT (esempio ${n})</div>
+                  <textarea class="fs-input" rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()"></textarea>
+                </div>
+                <div>
+                  <div class="fewshot-label">OUTPUT atteso</div>
+                  <textarea class="fs-output" rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()"></textarea>
+                </div>`;
+              div.querySelector('.fs-input').value = pair.input || '';
+              div.querySelector('.fs-output').value = pair.output || '';
+              container.appendChild(div);
+            });
+          }
         }
       }
     }
