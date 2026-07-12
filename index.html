@@ -1373,15 +1373,15 @@
     <div class="step-title">Strategia di revisione</div>
     <div class="step-sub">Quanto è importante la precisione in questo caso? Questo determina se il prompt richiederà una revisione critica separata.</div>
     <div class="options-grid" id="revision-options" style="--active-color:var(--c2)">
-      <div class="opt-card" onclick="toggleOpt(this,'revision',true)" data-val="standard">
+      <div class="opt-card" onclick="toggleOpt(this,'revision',true,true)" data-val="standard">
         <div class="opt-icon">⚡</div>
         <div class="opt-label">Velocità<br><span style="font-size:var(--text-xs);color:var(--muted)">Produzione + revisione nello stesso prompt</span></div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'revision',true)" data-val="critica">
+      <div class="opt-card" onclick="toggleOpt(this,'revision',true,true)" data-val="critica">
         <div class="opt-icon">🎯</div>
         <div class="opt-label">Precisione<br><span style="font-size:var(--text-xs);color:var(--muted)">Il prompt includerà istruzione per revisione critica</span></div>
       </div>
-      <div class="opt-card" onclick="toggleOpt(this,'revision',true)" data-val="alta-posta">
+      <div class="opt-card" onclick="toggleOpt(this,'revision',true,true)" data-val="alta-posta">
         <div class="opt-icon">🏛️</div>
         <div class="opt-label">Alto costo errore<br><span style="font-size:var(--text-xs);color:var(--muted)">Genera anche prompt separato per turno di revisione</span></div>
       </div>
@@ -1720,12 +1720,17 @@ function highlightSidebar(stepNum) {
 }
 
 // ── OPTION TOGGLE ──────────────────────────────────────────────────────────
-function toggleOpt(el, group, single=false) {
+function toggleOpt(el, group, single=false, allowEmpty=false) {
+  const wasSelected = el.classList.contains('selected');
   if (single) {
     const parent = el.closest('.options-grid') || el.parentNode;
     parent.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+    if (!(allowEmpty && wasSelected)) {
+      el.classList.add('selected');
+    }
+  } else {
+    el.classList.toggle('selected');
   }
-  el.classList.toggle('selected');
   // BUG-003: rilascia il focus per evitare hover persistente su touch
   requestAnimationFrame(() => el.blur());
   collectState(); updateScore();
