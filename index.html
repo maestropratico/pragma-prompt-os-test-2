@@ -1213,6 +1213,9 @@
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="esperto del settore">
         <div class="opt-icon">🏆</div><div class="opt-label">Esperto</div>
       </div>
+      <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="nessun pubblico specifico">
+        <div class="opt-icon">—</div><div class="opt-label">Nessun pubblico</div>
+      </div>
     </div>
 
     <div class="step-nav">
@@ -2027,9 +2030,9 @@ function generateOutput() {
 
   // audience / level
   const levelLabels = ['','molto semplice','base','intermedio','tecnico','esperto'];
-  if (state.audience || state.level!==3) {
+  if ((state.audience && state.audience!=='nessun pubblico specifico') || state.level!==3) {
     full += `## DESTINATARIO E LIVELLO\n`;
-    if (state.audience) full += `Pubblico: ${state.audience}.\n`;
+    if (state.audience && state.audience!=='nessun pubblico specifico') full += `Pubblico: ${state.audience}.\n`;
     full += `Livello tecnico della risposta: ${levelLabels[state.level]}.\n\n`;
   }
 
