@@ -33,6 +33,7 @@
     --mono: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Courier New', monospace;
     --sans: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     --font-scale: 1;
+    --keyboard-inset: 0px; /* BUG-UX-MOBILE-KBD-001: altezza occupata dalla tastiera virtuale, aggiornata via JS */
 
     /* Typography Token System — TECH-001 */
     --text-xs:   calc(10px * var(--font-scale));
@@ -360,13 +361,38 @@
     padding: 12px 14px; resize: vertical; outline: none;
     transition: border-color .2s;
     margin-bottom: 12px;
+    /* BUG-UX-MOBILE-KBD-001: margine di scroll per non lasciare il campo attivo
+       nascosto dietro la barra sticky (top) o dietro la tastiera virtuale (bottom) */
+    scroll-margin-top: 120px;
+    scroll-margin-bottom: calc(var(--keyboard-inset) + 24px);
   }
   textarea:focus, input[type=text]:focus { border-color: var(--active-color, var(--muted)); }
+  /* BUG-UX-MOBILE-KBD-001: spazio reale in fondo alla pagina quando la tastiera è aperta,
+     cosi' l'ultimo campo puo' comunque scorrere sopra il pannello IME */
+  body.keyboard-open { padding-bottom: var(--keyboard-inset); }
 
   /* few-shot pairs */
+  /* UX-FEWSHOT-001: ogni coppia è un gruppo visivo autonomo (card), non solo una griglia con margine */
   .fewshot-pair {
+    padding: var(--space-7); margin-bottom: var(--space-7);
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl);
+  }
+  .fewshot-pair-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: var(--space-5);
+  }
+  .fewshot-pair-title {
+    font-family: var(--mono); font-size: var(--text-sm); font-weight: 700; color: var(--muted);
+  }
+  .remove-pair-btn {
+    font-family: var(--mono); font-size: var(--text-xs); color: #ef4444;
+    background: transparent; border: 1px solid #ef4444; border-radius: var(--radius-sm);
+    padding: 4px 10px; cursor: pointer; min-height: 32px;
+    transition: background .15s, color .15s;
+  }
+  .remove-pair-btn:hover { background: #ef4444; color: #fff; }
+  .fewshot-pair-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5);
-    margin-bottom: 10px;
   }
   .fewshot-label { font-size: var(--text-sm); color: var(--muted); margin-bottom: 4px; font-family: var(--mono); }
 
@@ -795,7 +821,7 @@
     .sidebar { display: none; }
     .wizard { padding: 20px 16px; }
     .checks-grid { grid-template-columns: 1fr; }
-    .fewshot-pair { grid-template-columns: 1fr; }
+    .fewshot-pair-grid { grid-template-columns: 1fr; }
   }
 
   /* ── TOPBAR MOBILE CONTROLS ── */
@@ -1352,13 +1378,19 @@
     <div id="fewshot-section" style="display:none">
       <div id="fewshot-pairs">
         <div class="fewshot-pair" data-pair="1">
-          <div>
-            <div class="fewshot-label">INPUT (esempio 1)</div>
-            <textarea rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()" class="fs-input"></textarea>
+          <div class="fewshot-pair-header">
+            <span class="fewshot-pair-title">Esempio 1</span>
+            <button type="button" class="remove-pair-btn" onclick="removeFewshotPair(this)" aria-label="Elimina esempio 1">Elimina</button>
           </div>
-          <div>
-            <div class="fewshot-label">OUTPUT atteso</div>
-            <textarea rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()" class="fs-output"></textarea>
+          <div class="fewshot-pair-grid">
+            <div>
+              <div class="fewshot-label fewshot-label-input">INPUT (esempio 1)</div>
+              <textarea rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()" class="fs-input"></textarea>
+            </div>
+            <div>
+              <div class="fewshot-label fewshot-label-output">OUTPUT atteso</div>
+              <textarea rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()" class="fs-output"></textarea>
+            </div>
           </div>
         </div>
       </div>
@@ -1836,21 +1868,61 @@ function addCustomTag() {
   collectState(); updateScore();
 }
 
+// UX-FEWSHOT-001/002: markup condiviso per una coppia few-shot, usato da creazione, aggiunta e restore
+function buildFewshotPairInnerHTML(n) {
+  return `
+    <div class="fewshot-pair-header">
+      <span class="fewshot-pair-title">Esempio ${n}</span>
+      <button type="button" class="remove-pair-btn" onclick="removeFewshotPair(this)" aria-label="Elimina esempio ${n}">Elimina</button>
+    </div>
+    <div class="fewshot-pair-grid">
+      <div>
+        <div class="fewshot-label fewshot-label-input">INPUT (esempio ${n})</div>
+        <textarea rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()" class="fs-input"></textarea>
+      </div>
+      <div>
+        <div class="fewshot-label fewshot-label-output">OUTPUT atteso</div>
+        <textarea rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()" class="fs-output"></textarea>
+      </div>
+    </div>`;
+}
+
 function addFewshotPair() {
   const n = document.querySelectorAll('#fewshot-pairs .fewshot-pair').length + 1;
   const pair = document.createElement('div');
   pair.className = 'fewshot-pair';
   pair.setAttribute('data-pair', n);
-  pair.innerHTML = `
-    <div>
-      <div class="fewshot-label">INPUT (esempio ${n})</div>
-      <textarea rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()" class="fs-input"></textarea>
-    </div>
-    <div>
-      <div class="fewshot-label">OUTPUT atteso</div>
-      <textarea rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()" class="fs-output"></textarea>
-    </div>`;
+  pair.innerHTML = buildFewshotPairInnerHTML(n);
   document.getElementById('fewshot-pairs').appendChild(pair);
+}
+
+// UX-FEWSHOT-002: elimina una coppia (qualsiasi posizione) e rinumera le restanti.
+// Se resta una sola coppia, la svuota invece di rimuoverla dal DOM (mai pannello vuoto).
+function removeFewshotPair(button) {
+  const pair = button.closest('.fewshot-pair');
+  if (!pair) return;
+  const pairs = document.querySelectorAll('#fewshot-pairs .fewshot-pair');
+  if (pairs.length === 1) {
+    pair.querySelectorAll('textarea').forEach(field => { field.value = ''; });
+  } else {
+    pair.remove();
+  }
+  renumberFewshotPairs();
+  collectState();
+  updateScore();
+}
+
+function renumberFewshotPairs() {
+  document.querySelectorAll('#fewshot-pairs .fewshot-pair').forEach((pair, index) => {
+    const number = index + 1;
+    pair.dataset.pair = number;
+    const title = pair.querySelector('.fewshot-pair-title');
+    const inputLabel = pair.querySelector('.fewshot-label-input');
+    const removeButton = pair.querySelector('.remove-pair-btn');
+    if (title) title.textContent = `Esempio ${number}`;
+    if (inputLabel) inputLabel.textContent = `INPUT (esempio ${number})`;
+    if (removeButton) removeButton.setAttribute('aria-label', `Elimina esempio ${number}`);
+  });
 }
 
 function updateLevelLabel() {
@@ -2579,15 +2651,7 @@ function restoreFromStorage() {
               const div = document.createElement('div');
               div.className = 'fewshot-pair';
               div.dataset.pair = n;
-              div.innerHTML = `
-                <div>
-                  <div class="fewshot-label">INPUT (esempio ${n})</div>
-                  <textarea class="fs-input" rows="3" placeholder="Cosa riceve l'IA..." oninput="updateScore()"></textarea>
-                </div>
-                <div>
-                  <div class="fewshot-label">OUTPUT atteso</div>
-                  <textarea class="fs-output" rows="3" placeholder="Cosa dovrebbe rispondere..." oninput="updateScore()"></textarea>
-                </div>`;
+              div.innerHTML = buildFewshotPairInnerHTML(n);
               div.querySelector('.fs-input').value = pair.input || '';
               div.querySelector('.fs-output').value = pair.output || '';
               container.appendChild(div);
@@ -2599,6 +2663,36 @@ function restoreFromStorage() {
     return true;
   } catch(e) { return false; }
 }
+
+// ── BUG-UX-MOBILE-KBD-001 — gestione tastiera virtuale mobile ─────────────
+// Rileva l'altezza occupata dalla tastiera tramite visualViewport, aggiunge
+// spazio reale in fondo alla pagina e riporta il campo con focus in vista.
+// Non interferisce con desktop o browser privi di visualViewport (nessun-op).
+function updateKeyboardInset() {
+  const viewport = window.visualViewport;
+  if (!viewport) return;
+  const inset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+  document.documentElement.style.setProperty('--keyboard-inset', `${inset}px`);
+  document.body.classList.toggle('keyboard-open', inset > 100);
+}
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', updateKeyboardInset);
+  window.visualViewport.addEventListener('scroll', updateKeyboardInset);
+}
+
+document.addEventListener('focusin', event => {
+  const target = event.target;
+  const editable = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
+  if (!editable) return;
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+  }, 300);
+});
+
+document.addEventListener('focusout', () => {
+  setTimeout(updateKeyboardInset, 100);
+});
 
 initSidebar();
 updateLevelLabel();
