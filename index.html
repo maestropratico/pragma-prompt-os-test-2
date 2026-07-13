@@ -273,6 +273,7 @@
     border: 1px solid var(--border); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     font-size: var(--text-sm);
+    color: transparent; /* BUG-UX-CHECKBOX-001: il glifo ✓ è sempre nel markup ma va nascosto finché non selezionato */
   }
   .check-item.checked .check-box { background: var(--active-color, #fff); border-color: var(--active-color, #fff); color: #000; }
   .check-label { font-size: var(--text-base); }
