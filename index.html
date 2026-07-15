@@ -253,6 +253,9 @@
   }
   .opt-card.selected { border-color: var(--active-color, #fff); background: var(--surface2); }
   .opt-card .opt-icon { font-size: var(--text-2xl); }
+  /* ICON-002 (v1.4-dev F1): dimensione dedicata per le icone SVG semantiche nelle card.
+     Il font-size sopra resta come fallback (non determina più la dimensione degli SVG). */
+  .opt-card .opt-icon .icon { width: 28px; height: 28px; }
   .opt-card .opt-label { font-size: var(--text-md); font-weight: 500; }
 
   /* checkboxes custom */
@@ -997,6 +1000,231 @@
     <circle cx="12" cy="12" r="3"/>
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
   </symbol>
+
+  <!-- ICON-002 (DEC-032/v1.4-dev): catalogo icone semantiche di categoria, migrazione F1 -->
+  <symbol id="icon-semantic-scrivere" viewBox="0 0 24 24">
+    <title>Scrivere e redigere</title>
+    <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+  <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+  </symbol>
+  <symbol id="icon-semantic-analizzare" viewBox="0 0 24 24">
+    <title>Analizzare e valutare</title>
+    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <path d="M8 18v-1" />
+  <path d="M12 18v-6" />
+  <path d="M16 18v-3" />
+  </symbol>
+  <symbol id="icon-semantic-programmare" viewBox="0 0 24 24">
+    <title>Programmare e sviluppare codice</title>
+    <path d="m16 18 6-6-6-6" />
+  <path d="m8 6-6 6 6 6" />
+  </symbol>
+  <symbol id="icon-semantic-tradurre" viewBox="0 0 24 24">
+    <title>Tradurre e adattare tra lingue</title>
+    <path d="m5 8 6 6" />
+  <path d="m4 14 6-6 2-3" />
+  <path d="M2 5h12" />
+  <path d="M7 2h1" />
+  <path d="m22 22-5-10-5 10" />
+  <path d="M14 18h6" />
+  </symbol>
+  <symbol id="icon-semantic-spiegare" viewBox="0 0 24 24">
+    <title>Studiare e spiegare</title>
+    <path d="M12 7v14" />
+  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+  </symbol>
+  <symbol id="icon-semantic-brainstorming" viewBox="0 0 24 24">
+    <title>Brainstorming e generazione di idee</title>
+    <circle cx="18" cy="5" r="3" />
+  <circle cx="6" cy="12" r="3" />
+  <circle cx="18" cy="19" r="3" />
+  </symbol>
+  <symbol id="icon-semantic-riassumere" viewBox="0 0 24 24">
+    <title>Riassumere e comprimere un contenuto</title>
+    <path d="M10 5h11" />
+  <path d="M10 12h11" />
+  <path d="M10 19h11" />
+  <path d="m3 10 3-3-3-3" />
+  <path d="m3 20 3-3-3-3" />
+  </symbol>
+  <symbol id="icon-semantic-ricercare" viewBox="0 0 24 24">
+    <title>Ricercare e trovare informazioni</title>
+    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <circle cx="11.5" cy="14.5" r="2.5" />
+  <path d="M13.3 16.3 15 18" />
+  </symbol>
+  <symbol id="icon-semantic-output-testo" viewBox="0 0 24 24">
+    <title>Formato: testo narrativo</title>
+    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <path d="M10 9H8" />
+  <path d="M16 13H8" />
+  <path d="M16 17H8" />
+  </symbol>
+  <symbol id="icon-semantic-output-tabella" viewBox="0 0 24 24">
+    <title>Formato: tabella</title>
+    <path d="M12 3v18" />
+  <rect width="18" height="18" x="3" y="3" rx="2" />
+  <path d="M3 9h18" />
+  <path d="M3 15h18" />
+  </symbol>
+  <symbol id="icon-semantic-output-checklist" viewBox="0 0 24 24">
+    <title>Formato: checklist</title>
+    <path d="M13 5h8" />
+  <path d="M13 12h8" />
+  <path d="M13 19h8" />
+  <path d="m3 17 2 2 4-4" />
+  <path d="m3 7 2 2 4-4" />
+  </symbol>
+  <symbol id="icon-semantic-output-json" viewBox="0 0 24 24">
+    <title>Formato: JSON</title>
+    <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
+  <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />
+  </symbol>
+  <symbol id="icon-semantic-output-markdown" viewBox="0 0 24 24">
+    <title>Formato: Markdown</title>
+    <path d="M9 4 7 20M17 4l-2 16M4.5 9h15M3.5 15h15"/>
+  </symbol>
+  <symbol id="icon-semantic-output-codice" viewBox="0 0 24 24">
+    <title>Formato: codice</title>
+    <path d="M12 19h8" />
+  <path d="m4 17 6-6-6-6" />
+  </symbol>
+  <symbol id="icon-semantic-output-elenco" viewBox="0 0 24 24">
+    <title>Formato: elenco puntato</title>
+    <path d="M3 5h.01" />
+  <path d="M3 12h.01" />
+  <path d="M3 19h.01" />
+  <path d="M8 5h13" />
+  <path d="M8 12h13" />
+  <path d="M8 19h13" />
+  </symbol>
+  <symbol id="icon-semantic-output-risposta-diretta" viewBox="0 0 24 24">
+    <title>Formato: risposta breve e diretta</title>
+    <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+  <path d="m10 8-3 3 3 3" />
+  <path d="M17 14v-1a2 2 0 0 0-2-2H7" />
+  </symbol>
+  <symbol id="icon-semantic-esperto" viewBox="0 0 24 24">
+    <title>Ruolo o pubblico: esperto</title>
+    <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526" />
+  <circle cx="12" cy="8" r="6" />
+  </symbol>
+  <symbol id="icon-semantic-consulente" viewBox="0 0 24 24">
+    <title>Ruolo: consulente</title>
+    <circle cx="12" cy="12" r="10" />
+  <path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" />
+  </symbol>
+  <symbol id="icon-semantic-insegnante" viewBox="0 0 24 24">
+    <title>Ruolo: insegnante</title>
+    <path d="M2 3h20" />
+  <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
+  <path d="m7 21 5-5 5 5" />
+  </symbol>
+  <symbol id="icon-semantic-analista" viewBox="0 0 24 24">
+    <title>Ruolo: analista</title>
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+  <circle cx="12" cy="7" r="4" />
+  <path d="M15 19v-3M18 19v-5M21 19v-2"/>
+  </symbol>
+  <symbol id="icon-semantic-assistente" viewBox="0 0 24 24">
+    <title>Ruolo: assistente</title>
+    <circle cx="8" cy="7" r="3"/>
+  <path d="M3 20c0-3.9 2.2-7 5-7s5 3.1 5 7"/>
+  <path d="M14 12h6a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3l-2.5 2.5V18h-.5a1 1 0 0 1-1-1v-1"/>
+  </symbol>
+  <symbol id="icon-semantic-neutro" viewBox="0 0 24 24">
+    <title>Nessuna scelta specifica</title>
+    <path d="M10.1 2.182a10 10 0 0 1 3.8 0" />
+  <path d="M13.9 21.818a10 10 0 0 1-3.8 0" />
+  <path d="M17.609 3.721a10 10 0 0 1 2.69 2.7" />
+  <path d="M2.182 13.9a10 10 0 0 1 0-3.8" />
+  <path d="M20.279 17.609a10 10 0 0 1-2.7 2.69" />
+  <path d="M21.818 10.1a10 10 0 0 1 0 3.8" />
+  <path d="M3.721 6.391a10 10 0 0 1 2.7-2.69" />
+  <path d="M6.391 20.279a10 10 0 0 1-2.69-2.7" />
+  </symbol>
+  <symbol id="icon-semantic-principiante" viewBox="0 0 24 24">
+    <title>Pubblico: principiante</title>
+    <path d="M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3" />
+  <path d="M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4" />
+  <path d="M5 21h14" />
+  </symbol>
+  <symbol id="icon-semantic-studente" viewBox="0 0 24 24">
+    <title>Pubblico: studente</title>
+    <path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+  <path d="M8 10h8" />
+  <path d="M8 18h8" />
+  <path d="M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6" />
+  <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+  </symbol>
+  <symbol id="icon-semantic-tecnico-pubblico" viewBox="0 0 24 24">
+    <title>Pubblico: tecnico/sviluppatore</title>
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" />
+  </symbol>
+  <symbol id="icon-semantic-manager" viewBox="0 0 24 24">
+    <title>Pubblico: manager/decisore</title>
+    <circle cx="8" cy="7" r="3"/>
+  <path d="M3 20c0-3.9 2.2-7 5-7s5 3.1 5 7"/>
+  <path d="M15 15h6v6"/>
+  <path d="m21 15-5 5-3-3-4 4"/>
+  </symbol>
+  <symbol id="icon-semantic-cliente" viewBox="0 0 24 24">
+    <title>Pubblico: cliente finale</title>
+    <circle cx="12" cy="8" r="5" />
+  <path d="M20 21a8 8 0 0 0-16 0" />
+  </symbol>
+  <symbol id="icon-semantic-esempio" viewBox="0 0 24 24">
+    <title>Esempio dimostrativo input-output</title>
+    <rect x="1" y="8" width="7" height="7" rx="1.3"/>
+  <rect x="16" y="8" width="7" height="7" rx="1.3"/>
+  <g transform="translate(6.8,6.3) scale(0.43)">
+    <path d="M5 12h14" />
+    <path d="m12 5 7 7-7 7" />
+  </g>
+  </symbol>
+  <symbol id="icon-semantic-contesto-usa-solo-questo" viewBox="0 0 24 24">
+    <title>Contesto: usa solo questo documento</title>
+    <path d="M16 2v5h5" />
+  <path d="M21 6v6.5c0 .8-.7 1.5-1.5 1.5h-7c-.8 0-1.5-.7-1.5-1.5v-9c0-.8.7-1.5 1.5-1.5H17l4 4z" />
+  <path d="M7 8v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H15" />
+  <path d="M3 12v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H11" />
+  </symbol>
+  <symbol id="icon-semantic-contesto-punto-partenza" viewBox="0 0 24 24">
+    <title>Contesto: punto di partenza</title>
+    <path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528" />
+  </symbol>
+  <symbol id="icon-semantic-contesto-analizza" viewBox="0 0 24 24">
+    <title>Contesto: analizza</title>
+    <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" />
+  <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" />
+  <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" />
+  </symbol>
+  <symbol id="icon-semantic-contesto-riassumi-prima" viewBox="0 0 24 24">
+    <title>Contesto: riassumi prima</title>
+    <path d="M6 2h8l4 4v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
+  <path d="M13 2v4h4"/>
+  <path d="M7.5 8h7M7.5 10.3h7M7.5 12.6h5M7.5 14.9h3"/>
+  <path d="M9 19.5h6"/>
+  </symbol>
+  <symbol id="icon-semantic-revisione-standard" viewBox="0 0 24 24">
+    <title>Revisione: velocità (controllo ordinario)</title>
+    <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+  </symbol>
+  <symbol id="icon-semantic-revisione-critica" viewBox="0 0 24 24">
+    <title>Revisione: precisione (controllo approfondito)</title>
+    <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+  <path d="m9 11 3 3L22 4" />
+  </symbol>
+  <symbol id="icon-semantic-revisione-alta-posta" viewBox="0 0 24 24">
+    <title>Revisione: alto costo errore (controllo massimo)</title>
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path d="M12 9v4" />
+  <path d="M12 17h.01" />
+  </symbol>
 </svg>
 
 <!-- TOPBAR -->
@@ -1148,28 +1376,28 @@
     </div>
     <div class="options-grid" id="task-options" style="--active-color:var(--c1)">
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Scrivere/redigere">
-        <div class="opt-icon">✍️</div><div class="opt-label">Scrivere</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-scrivere"></use></svg></div><div class="opt-label">Scrivere</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Analizzare/valutare">
-        <div class="opt-icon">🔍</div><div class="opt-label">Analizzare</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-analizzare"></use></svg></div><div class="opt-label">Analizzare</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Programmare/debuggare">
-        <div class="opt-icon">💻</div><div class="opt-label">Programmare</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-programmare"></use></svg></div><div class="opt-label">Programmare</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Tradurre/adattare">
-        <div class="opt-icon">🌐</div><div class="opt-label">Tradurre</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-tradurre"></use></svg></div><div class="opt-label">Tradurre</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Studiare/spiegare">
-        <div class="opt-icon">📚</div><div class="opt-label">Spiegare</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-spiegare"></use></svg></div><div class="opt-label">Spiegare</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Brainstorming">
-        <div class="opt-icon">💡</div><div class="opt-label">Brainstorming</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-brainstorming"></use></svg></div><div class="opt-label">Brainstorming</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Riassumere">
-        <div class="opt-icon">📝</div><div class="opt-label">Riassumere</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-riassumere"></use></svg></div><div class="opt-label">Riassumere</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'task')" data-val="Ricercare/trovare informazioni">
-        <div class="opt-icon">🔎</div><div class="opt-label">Ricercare</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-ricercare"></use></svg></div><div class="opt-label">Ricercare</div>
       </div>
     </div>
     <div style="margin-bottom:8px;font-size:var(--text-base);color:var(--muted)">Descrivi l'obiettivo in parole tue (opzionale ma consigliato):</div>
@@ -1187,28 +1415,28 @@
     <div class="step-sub">Seleziona il formato dell'output. Puoi scegliere più opzioni.</div>
     <div class="options-grid" id="output-options" style="--active-color:var(--c1)">
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="testo narrativo">
-        <div class="opt-icon">📄</div><div class="opt-label">Testo</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-testo"></use></svg></div><div class="opt-label">Testo</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="tabella">
-        <div class="opt-icon">📊</div><div class="opt-label">Tabella</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-tabella"></use></svg></div><div class="opt-label">Tabella</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="checklist">
-        <div class="opt-icon">☑️</div><div class="opt-label">Checklist</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-checklist"></use></svg></div><div class="opt-label">Checklist</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="JSON">
-        <div class="opt-icon">{ }</div><div class="opt-label">JSON</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-json"></use></svg></div><div class="opt-label">JSON</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="Markdown">
-        <div class="opt-icon">#</div><div class="opt-label">Markdown</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-markdown"></use></svg></div><div class="opt-label">Markdown</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="codice">
-        <div class="opt-icon">⌨️</div><div class="opt-label">Codice</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-codice"></use></svg></div><div class="opt-label">Codice</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="elenco puntato">
-        <div class="opt-icon">•</div><div class="opt-label">Elenco</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-elenco"></use></svg></div><div class="opt-label">Elenco</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'output')" data-val="risposta breve e diretta">
-        <div class="opt-icon">⚡</div><div class="opt-label">Risposta diretta</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-output-risposta-diretta"></use></svg></div><div class="opt-label">Risposta diretta</div>
       </div>
     </div>
     <div style="margin-bottom:8px;font-size:var(--text-base);color:var(--muted)">Lunghezza massima (opzionale):</div>
@@ -1229,22 +1457,22 @@
     <div style="margin-bottom:12px;font-size:var(--text-base);font-weight:500">Ruolo dell'IA:</div>
     <div class="options-grid" id="role-options" style="--active-color:var(--c3)">
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="esperto del settore">
-        <div class="opt-icon">🎓</div><div class="opt-label">Esperto</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-esperto"></use></svg></div><div class="opt-label">Esperto</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="consulente del settore">
-        <div class="opt-icon">💼</div><div class="opt-label">Consulente</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-consulente"></use></svg></div><div class="opt-label">Consulente</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="insegnante del settore">
-        <div class="opt-icon">🏫</div><div class="opt-label">Insegnante</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-insegnante"></use></svg></div><div class="opt-label">Insegnante</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="analista del settore">
-        <div class="opt-icon">🧐</div><div class="opt-label">Analista</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-analista"></use></svg></div><div class="opt-label">Analista</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="assistente del settore">
-        <div class="opt-icon">⚙️</div><div class="opt-label">Assistente</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-assistente"></use></svg></div><div class="opt-label">Assistente</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'role',true)" data-val="nessun ruolo specifico">
-        <div class="opt-icon">—</div><div class="opt-label">Nessuno</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-neutro"></use></svg></div><div class="opt-label">Nessuno</div>
       </div>
     </div>
 
@@ -1259,25 +1487,25 @@
     <div style="margin-bottom:12px;font-size:var(--text-base);font-weight:500">Pubblico destinatario:</div>
     <div class="options-grid" id="audience-options" style="--active-color:var(--c3)">
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="principiante / nessuna competenza tecnica">
-        <div class="opt-icon">🌱</div><div class="opt-label">Principiante</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-principiante"></use></svg></div><div class="opt-label">Principiante</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="studente">
-        <div class="opt-icon">🎒</div><div class="opt-label">Studente</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-studente"></use></svg></div><div class="opt-label">Studente</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="tecnico / sviluppatore">
-        <div class="opt-icon">🔧</div><div class="opt-label">Tecnico</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-tecnico-pubblico"></use></svg></div><div class="opt-label">Tecnico</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="manager / decisore">
-        <div class="opt-icon">📋</div><div class="opt-label">Manager</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-manager"></use></svg></div><div class="opt-label">Manager</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="cliente finale">
-        <div class="opt-icon">👤</div><div class="opt-label">Cliente</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-cliente"></use></svg></div><div class="opt-label">Cliente</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="esperto del settore">
-        <div class="opt-icon">🏆</div><div class="opt-label">Esperto</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-esperto"></use></svg></div><div class="opt-label">Esperto</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'audience',true)" data-val="nessun pubblico specifico">
-        <div class="opt-icon">—</div><div class="opt-label">Nessun pubblico</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-neutro"></use></svg></div><div class="opt-label">Nessun pubblico</div>
       </div>
     </div>
 
@@ -1369,10 +1597,10 @@
 
     <div class="options-grid" id="fewshot-mode-options" style="--active-color:var(--c4);margin-bottom:20px">
       <div class="opt-card" onclick="setFewshotMode('yes',this)" data-val="yes">
-        <div class="opt-icon">✅</div><div class="opt-label">Sì, ho esempi</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-esempio"></use></svg></div><div class="opt-label">Sì, ho esempi</div>
       </div>
       <div class="opt-card selected" onclick="setFewshotMode('no',this)" data-val="no">
-        <div class="opt-icon">—</div><div class="opt-label">Non necessario</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-neutro"></use></svg></div><div class="opt-label">Non necessario</div>
       </div>
     </div>
 
@@ -1414,19 +1642,19 @@
     <div style="margin-bottom:12px;font-size:var(--text-base);font-weight:500">Come deve usare questo contesto?</div>
     <div class="options-grid" id="context-use-options" style="--active-color:var(--c5)">
       <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="Usa solo le informazioni fornite, non aggiungere altro">
-        <div class="opt-icon">🔒</div><div class="opt-label">Usa solo questo</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-contesto-usa-solo-questo"></use></svg></div><div class="opt-label">Usa solo questo</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="Usa il testo fornito come punto di partenza, poi integra con le tue conoscenze">
-        <div class="opt-icon">🔗</div><div class="opt-label">Punto di partenza</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-contesto-punto-partenza"></use></svg></div><div class="opt-label">Punto di partenza</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="Analizza il testo fornito e produci l'output richiesto">
-        <div class="opt-icon">🔍</div><div class="opt-label">Analizza</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-contesto-analizza"></use></svg></div><div class="opt-label">Analizza</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="Riassumi il testo fornito, poi rispondi alla richiesta">
-        <div class="opt-icon">📝</div><div class="opt-label">Riassumi prima</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-contesto-riassumi-prima"></use></svg></div><div class="opt-label">Riassumi prima</div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'ctxuse',true)" data-val="nessun contesto specifico">
-        <div class="opt-icon">—</div><div class="opt-label">Nessun contesto</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-neutro"></use></svg></div><div class="opt-label">Nessun contesto</div>
       </div>
     </div>
     <div class="step-nav">
@@ -1443,15 +1671,15 @@
     <div class="step-sub">Quanto è importante la precisione in questo caso? Questo determina se il prompt richiederà una revisione critica separata.</div>
     <div class="options-grid" id="revision-options" style="--active-color:var(--c2)">
       <div class="opt-card" onclick="toggleOpt(this,'revision',true,true)" data-val="standard">
-        <div class="opt-icon">⚡</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-revisione-standard"></use></svg></div>
         <div class="opt-label">Velocità<br><span style="font-size:var(--text-xs);color:var(--muted)">Produzione + revisione nello stesso prompt</span></div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'revision',true,true)" data-val="critica">
-        <div class="opt-icon">🎯</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-revisione-critica"></use></svg></div>
         <div class="opt-label">Precisione<br><span style="font-size:var(--text-xs);color:var(--muted)">Il prompt includerà istruzione per revisione critica</span></div>
       </div>
       <div class="opt-card" onclick="toggleOpt(this,'revision',true,true)" data-val="alta-posta">
-        <div class="opt-icon">🏛️</div>
+        <div class="opt-icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-semantic-revisione-alta-posta"></use></svg></div>
         <div class="opt-label">Alto costo errore<br><span style="font-size:var(--text-xs);color:var(--muted)">Genera anche prompt separato per turno di revisione</span></div>
       </div>
     </div>
@@ -1662,6 +1890,424 @@ const BLOCKS = [
   { id:'b4', name:'Apprendimento esempi', color:'var(--c4)', steps:[6],   keys:['fewshot'] },
   { id:'b5', name:'Gestione contesto',  color:'var(--c5)', steps:[7],     keys:['contextText','contextUse'] },
 ];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PR-1 (DEC-031 / v1.4-dev) — Modello dati e motore diagnostico Prompt Readiness
+// SPERIMENTALE — non validato, non collegato all'interfaccia, non sostituisce
+// updateScore()/blockScore() né il punteggio visibile. Nessuna preselezione
+// automatica. Pesi e regole sotto sono candidati, non definitivi (DEC-031).
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── STATO READINESS (separato da `state`, non persistito, non collegato alla UI) ──
+let readiness = {
+  completeness: 0,
+  coherence: 0,
+  // PR-1.1: oggetto strutturato, non più numero semplice — vedi calculateRiskCoverage()
+  riskCoverage: { score: null, applicabile: false, stato: 'non_applicabile', profili: [] }
+};
+
+let presetRuntime = {
+  selected: null,
+  preview: null,
+  appliedChanges: []
+};
+
+let recommendations = [];
+let conflicts = [];
+
+// ── CATALOGO PRESET (struttura, DEC-031: "approvati come categorie di prodotto") ──
+// Le "modifiche proposte" sono elenchi vuoti in PR-1: la mappatura concreta
+// preset -> modifiche di stato è oggetto di PR-3, non di questa patch.
+const PRESET_CATALOG = {
+  rapido: {
+    id: 'rapido',
+    label: 'Rapido',
+    descrizione: 'Il minimo indispensabile per una richiesta chiara e diretta, senza passaggi accessori.',
+    obiettivo: 'Ridurre il tempo di costruzione del prompt quando il compito è semplice o l\'urgenza prevale sulla completezza.',
+    modificheProposte: [],
+    motivazione: 'Non ogni prompt richiede tutti i blocchi: per compiti semplici la completezza massima può essere superflua.',
+    rischiCoperti: []
+  },
+  professionale: {
+    id: 'professionale',
+    label: 'Professionale',
+    descrizione: 'Taratura per un contesto lavorativo, con tono e formato adatti a un uso in ambito professionale.',
+    obiettivo: 'Garantire un livello di formalità e struttura coerente con un output da condividere in ambito lavorativo.',
+    modificheProposte: [],
+    motivazione: 'Il contesto professionale ha vincoli impliciti (tono, formato, verificabilità) ricorrenti tra i task.',
+    rischiCoperti: ["Segnala esplicitamente i rischi o i limiti dell'approccio proposto"]
+  },
+  ricercaVerificata: {
+    id: 'ricercaVerificata',
+    label: 'Ricerca verificata',
+    descrizione: 'Enfasi su accuratezza fattuale, dichiarazione delle incertezze e assenza di invenzione.',
+    obiettivo: 'Minimizzare il rischio di informazioni inventate o non verificate in compiti di ricerca/analisi.',
+    modificheProposte: [],
+    motivazione: 'I task di ricerca/analisi hanno un profilo di rischio fattuale specifico (vedi calculateRiskCoverage).',
+    rischiCoperti: [
+      'Non inventare informazioni: se non sai qualcosa, dichiaralo',
+      'Verifica la presenza di errori logici o fattuali prima di rispondere',
+      'Dichiara esplicitamente le incertezze: distingui fatti verificati da stime o ipotesi'
+    ]
+  },
+  creativo: {
+    id: 'creativo',
+    label: 'Creativo',
+    descrizione: 'Libertà espressiva prioritaria; i criteri di accuratezza fattuale non si applicano allo stesso modo.',
+    obiettivo: 'Evitare che criteri pensati per compiti fattuali penalizzino impropriamente un compito creativo.',
+    modificheProposte: [],
+    motivazione: 'Un prompt creativo valutato con gli stessi criteri di un prompt fattuale produce falsi negativi (DEC-031, criterio 5).',
+    rischiCoperti: []
+  },
+  tecnico: {
+    id: 'tecnico',
+    label: 'Tecnico',
+    descrizione: 'Profilo per pubblico tecnico/sviluppatore, terminologia di settore ammessa.',
+    obiettivo: 'Allineare livello di dettaglio e terminologia a un pubblico con competenza tecnica.',
+    modificheProposte: [],
+    motivazione: 'Il pubblico tecnico rende superfluo (e talvolta controproducente) semplificare il gergo.',
+    rischiCoperti: []
+  },
+  altaAffidabilita: {
+    id: 'altaAffidabilita',
+    label: 'Alta affidabilità',
+    descrizione: 'Massima cautela: revisione approfondita, verifica vincoli, alternative multiple.',
+    obiettivo: 'Coprire compiti ad alto costo dell\'errore con il massimo livello di controllo disponibile.',
+    modificheProposte: [],
+    motivazione: 'Coerente con il profilo di rischio "alto costo dell\'errore" già definito in calculateRiskCoverage.',
+    rischiCoperti: [
+      "Segnala esplicitamente i rischi o i limiti dell'approccio proposto",
+      'Verifica che la risposta rispetti tutti i vincoli specificati',
+      'Considera almeno due alternative o prospettive diverse'
+    ]
+  },
+  analisiDocumento: {
+    id: 'analisiDocumento',
+    label: 'Analisi documento',
+    descrizione: 'Taratura per l\'analisi di un testo/documento fornito dall\'utente.',
+    obiettivo: 'Guidare la scelta coerente di modalità d\'uso del contesto quando il compito è analizzare un testo fornito.',
+    modificheProposte: [],
+    motivazione: 'Collegato al blocco Gestione contesto (b5) e al campo contextUse.',
+    rischiCoperti: ['Verifica la presenza di errori logici o fattuali prima di rispondere']
+  },
+  codiceDebug: {
+    id: 'codiceDebug',
+    label: 'Codice/debug',
+    descrizione: 'Taratura per compiti di programmazione/debug, con verifica errori e rispetto vincoli come priorità.',
+    obiettivo: 'Coprire il profilo di rischio specifico dei task di programmazione (vedi calculateRiskCoverage).',
+    modificheProposte: [],
+    motivazione: 'I task di codice/debug hanno un profilo di rischio diverso da quello testuale generico.',
+    rischiCoperti: [
+      'Verifica la presenza di errori logici o fattuali prima di rispondere',
+      'Verifica che la risposta rispetti tutti i vincoli specificati'
+    ]
+  }
+};
+
+// ── COSTANTI DI SUPPORTO (data-val esatti, per evitare stringhe magiche sparse) ──
+const RQ_NOINVENT     = 'Non inventare informazioni: se non sai qualcosa, dichiaralo';
+const RQ_ERRORS        = 'Verifica la presenza di errori logici o fattuali prima di rispondere';
+const RQ_UNCERTAINTY   = 'Dichiara esplicitamente le incertezze: distingui fatti verificati da stime o ipotesi';
+const RQ_CALC          = 'Verifica i calcoli numerici prima di presentarli';
+const RQ_RISKS         = "Segnala esplicitamente i rischi o i limiti dell'approccio proposto";
+const RQ_CONSTRAINTS   = 'Verifica che la risposta rispetti tutti i vincoli specificati';
+const RQ_ALTERNATIVES  = 'Considera almeno due alternative o prospettive diverse';
+const RQ_INCOHERENCE   = 'Controlla incoerenze interne nella risposta';
+
+// PR-1.1: vincoli reali di Scheda 5 (toggleTag -> state.constraints), non un proxy.
+// "Non inventare" (quality) resta un criterio distinto: controlla l'affidabilità
+// dichiarativa, non la verificabilità/provenienza dell'informazione.
+const RC_CITA_FONTI      = 'Cita le fonti utilizzate';
+const RC_FONTI_PRIMARIE  = 'Usa solo fonti istituzionali o primarie';
+
+const NEUTRAL_ROLE      = 'nessun ruolo specifico';
+const NEUTRAL_AUDIENCE  = 'nessun pubblico specifico';
+const NEUTRAL_CONTEXT   = 'nessun contesto specifico';
+const CTX_SOLO_TESTO    = 'Usa solo le informazioni fornite, non aggiungere altro';
+
+// ── COMPLETEZZA ──────────────────────────────────────────────────────────────
+// Corregge blockScore('b3')/('b4')/('b5'): una scelta neutra esplicita è valida
+// ma non equivale a un input specifico; 'fewshotMode=no' non vale 100 automatico;
+// testo di contesto senza modalità d'uso è incompleto, non pieno.
+function calculateCompleteness(s) {
+  s = s || state;
+  let score = 0;
+
+  // Blocco 1 — Specifica (peso 30)
+  if (s.task.length > 0) score += 12;
+  if (s.taskDesc.trim().length > 20) score += 12;
+  if (s.output.length > 0) score += 6;
+
+  // Blocco 2 — Criteri di qualità selezionati (peso 15)
+  if (s.quality.length >= 1) score += 5;
+  if (s.quality.length >= 3) score += 5;
+  if (s.quality.length >= 5) score += 5;
+
+  // Blocco 3 — Orientamento (peso 20): decisione presa vale poco, specificità vale di più
+  const roleExplicit = s.role !== '' && s.role !== NEUTRAL_ROLE;
+  if (s.role !== '') score += 3;
+  if (roleExplicit) score += 7;
+  const audienceExplicit = s.audience !== '' && s.audience !== NEUTRAL_AUDIENCE;
+  if (s.audience !== '') score += 3;
+  if (audienceExplicit) score += 7;
+
+  // Blocco 4 — Esempi (peso 10): 'no' è scelta valida, non equivalente a esempi forniti
+  if (s.fewshotMode === 'yes') {
+    const pairs = s.fewshot.filter(p => p.input && p.output);
+    score += Math.min(10, pairs.length * 5);
+  } else if (s.fewshotMode === 'no') {
+    score += 4;
+  }
+
+  // Blocco 5 — Contesto (peso 25): testo senza modalità d'uso = incompleto, non pieno
+  const hasContextText = s.contextText.trim().length > 20;
+  const ctxExplicit = s.contextUse !== '' && s.contextUse !== NEUTRAL_CONTEXT;
+  if (hasContextText && ctxExplicit) score += 25;
+  else if (hasContextText && !ctxExplicit) score += 10;
+  else if (!hasContextText && ctxExplicit) score += 8;
+  else score += 8; // nessun testo, nessuna modalità dichiarata: scelta coerente, non penalizzata oltre
+
+  return Math.min(100, Math.round(score));
+}
+
+// ── COERENZA ─────────────────────────────────────────────────────────────────
+// Rileva incompatibilità tra selezioni. Le regole su tono/lunghezza operano su
+// testo libero (constraints/outputLength: l'app non ha campi categorici dedicati
+// per "tono" o "limite parole") tramite pattern euristici — meno affidabili delle
+// regole su campi strutturati, da verificare esplicitamente in PR-5.
+function calculateCoherence(s) {
+  s = s || state;
+  const found = detectConflicts(s);
+  const PENALITA = { alta: 20, media: 10, bassa: 5 };
+  let score = 100;
+  found.forEach(c => { score -= (PENALITA[c.severity] ?? 10); });
+  return Math.max(0, score);
+}
+
+function detectConflicts(s) {
+  s = s || state;
+  const out = [];
+  const constraintsText = s.constraints.join(' \n ').toLowerCase();
+  const taskDescText = (s.taskDesc || '').toLowerCase();
+  const freeText = constraintsText + ' \n ' + taskDescText;
+
+  // Tono formale vs informale (euristico, testo libero)
+  const hasFormale = /\bformale\b/.test(freeText);
+  const hasInformale = /\binformale\b|\bdiretto\b/.test(freeText);
+  if (hasFormale && hasInformale) {
+    out.push({ id: 'tono-conflitto', severity: 'media',
+      messaggio: 'Rilevate indicazioni di tono sia formale sia informale/diretto nei vincoli o nella descrizione.' });
+  }
+
+  // Limiti di lunghezza multipli e discordanti (euristico: numeri seguiti da "parole")
+  const wordLimits = [...freeText.matchAll(/(\d+)\s*parole/g)].map(m => parseInt(m[1]));
+  if (wordLimits.length >= 2 && Math.max(...wordLimits) - Math.min(...wordLimits) > 100) {
+    out.push({ id: 'lunghezza-conflitto', severity: 'media',
+      messaggio: `Rilevati più limiti di lunghezza discordanti nei vincoli (${wordLimits.join(', ')} parole).` });
+  }
+
+  // Solo testo fornito vs task che implica ricerca di informazioni esterne
+  if (s.contextUse === CTX_SOLO_TESTO && s.task.includes('Ricercare/trovare informazioni')) {
+    out.push({ id: 'contesto-ricerca-conflitto', severity: 'alta',
+      messaggio: '"Usa solo le informazioni fornite" è in tensione con il compito "Ricercare/trovare informazioni", che presuppone l\'uso di conoscenze esterne.' });
+  }
+
+  // Livello esperto + indicazione di evitare gergo tecnico (euristico)
+  const noJargon = /gergo|tecnicismi|linguaggio semplice/.test(freeText);
+  if (s.level >= 4 && noJargon) {
+    out.push({ id: 'livello-gergo-conflitto', severity: 'media',
+      messaggio: 'Livello tecnico elevato selezionato insieme a un\'indicazione di evitare gergo/tecnicismi.' });
+  }
+
+  // Risposta breve e diretta + troppi formati di output insieme
+  if (s.output.includes('risposta breve e diretta') && s.output.length > 1) {
+    out.push({ id: 'risposta-breve-troppi-formati', severity: 'media',
+      messaggio: '"Risposta breve e diretta" è selezionata insieme ad altri formati di output — verificarne la compatibilità.' });
+  }
+
+  // JSON + Codice: dominanza da segnalare, non necessariamente un errore
+  if (s.output.includes('JSON') && s.output.includes('codice')) {
+    out.push({ id: 'json-codice-dominanza', severity: 'bassa',
+      messaggio: 'Selezionati sia JSON sia Codice come formato: uno dei due formati tende a dominare l\'output — non è un errore, va solo reso esplicito nel prompt.' });
+  }
+
+  return out;
+}
+
+// ── COPERTURA DEL RISCHIO ─────────────────────────────────────────────────────
+// Valuta la pertinenza delle protezioni selezionate rispetto al task dichiarato,
+// non il numero di checkbox spuntate. Profili sperimentali, da calibrare in PR-5.
+// PR-1.1: ritorna un oggetto strutturato, non un numero semplice. "Non applicabile"
+// (nessun profilo di rischio fattuale riconosciuto, incluso il caso creativo puro)
+// non è più rappresentato con 100 — 100 significava impropriamente "rischio coperto
+// al massimo", mentre il caso reale è "nessun rischio fattuale noto da valutare".
+// Stesso principio già applicato a fewshotMode='no' in calculateCompleteness.
+function calculateRiskCoverage(s) {
+  s = s || state;
+  const q = s.quality || [];
+  const c = s.constraints || [];
+  const selected = [...q, ...c]; // le protezioni selezionate possono venire da entrambi i blocchi
+
+  // profilo -> criteri attesi. "Fonti" ora è il vincolo reale di Scheda 5
+  // (RC_CITA_FONTI / RC_FONTI_PRIMARIE), distinto da "Non inventare" (RQ_NOINVENT):
+  // sono tre dimensioni diverse — affidabilità dichiarativa, verificabilità,
+  // qualità della provenienza — e vanno verificate tutte, non l'una al posto dell'altra.
+  const profiles = [];
+  if (s.task.includes('Ricercare/trovare informazioni') || s.task.includes('Analizzare/valutare')) {
+    profiles.push({ nome: 'ricerca_analisi', attesi: [RQ_NOINVENT, RQ_ERRORS, RQ_UNCERTAINTY, RC_CITA_FONTI, RC_FONTI_PRIMARIE] });
+  }
+  if (/calcol/.test((s.taskDesc || '').toLowerCase())) {
+    profiles.push({ nome: 'calcoli', attesi: [RQ_CALC] });
+  }
+  if (s.revision === 'alta-posta') {
+    profiles.push({ nome: 'alto_costo_errore', attesi: [RQ_RISKS, RQ_CONSTRAINTS, RQ_ALTERNATIVES] });
+  }
+  if (s.task.includes('Programmare/debuggare')) {
+    profiles.push({ nome: 'codice_debug', attesi: [RQ_ERRORS, RQ_CONSTRAINTS] });
+  }
+
+  if (profiles.length === 0) {
+    // Nessun profilo di rischio fattuale riconosciuto — sia per compito creativo
+    // puro sia per qualunque altro task senza profilo definito. Non applicabile,
+    // non "coperto al 100%" e non "0% di rischio ignorato".
+    return { score: null, applicabile: false, stato: 'non_applicabile', profili: [] };
+  }
+
+  const score = scoreProfiles(profiles, selected);
+  const stato = score >= 80 ? 'coperto' : score >= 40 ? 'parziale' : 'insufficiente';
+  return { score, applicabile: true, stato, profili: profiles.map(p => p.nome) };
+}
+
+function scoreProfiles(profiles, selectedAll) {
+  let totalExpected = 0, totalCovered = 0;
+  profiles.forEach(p => {
+    totalExpected += p.attesi.length;
+    p.attesi.forEach(c => { if (selectedAll.includes(c)) totalCovered++; });
+  });
+  if (totalExpected === 0) return 100;
+  return Math.round((totalCovered / totalExpected) * 100);
+}
+
+// ── RACCOMANDAZIONI (spiegabili, revocabili — nessuna applicazione automatica) ──
+function detectRecommendations(s) {
+  s = s || state;
+  const recs = [];
+
+  if ((s.task.includes('Ricercare/trovare informazioni') || s.task.includes('Analizzare/valutare'))
+      && !s.quality.includes(RQ_NOINVENT)) {
+    recs.push({
+      id: 'rec-noinvent',
+      messaggio: 'Il compito implica ricerca/analisi: valuta di aggiungere "Non inventare informazioni" tra i criteri di qualità.',
+      criterioSuggerito: RQ_NOINVENT,
+      revocabile: true
+    });
+  }
+
+  if (s.revision === 'alta-posta' && !s.quality.includes(RQ_RISKS)) {
+    recs.push({
+      id: 'rec-risks',
+      messaggio: 'Hai indicato revisione ad alta posta in gioco: valuta di aggiungere "Segnala rischi o limiti".',
+      criterioSuggerito: RQ_RISKS,
+      revocabile: true
+    });
+  }
+
+  if (s.task.includes('Programmare/debuggare') && s.revision === 'standard') {
+    recs.push({
+      id: 'rec-revision-codice',
+      messaggio: 'Per compiti di codice/debug, una revisione "critica" o superiore riduce il rischio di errori non segnalati.',
+      criterioSuggerito: null,
+      revocabile: true
+    });
+  }
+
+  return recs;
+}
+
+// ── AGGIORNAMENTO NON INTRUSIVO ──────────────────────────────────────────────
+// Calcola i tre sotto-punteggi sperimentali nelle variabili readiness/recommendations/
+// conflicts SENZA scrivere sull'interfaccia e SENZA sostituire updateScore(). Va
+// richiamata manualmente (console) finché non esiste una UI dedicata (PR-2).
+function computeReadinessDiagnostics() {
+  collectState();
+  readiness.completeness = calculateCompleteness(state);
+  readiness.coherence = calculateCoherence(state);
+  readiness.riskCoverage = calculateRiskCoverage(state);
+  recommendations = detectRecommendations(state);
+  conflicts = detectConflicts(state);
+  return { readiness, recommendations, conflicts };
+}
+
+// ── TEST DETERMINISTICI (diagnostica manuale, non eseguiti automaticamente) ──
+// Da lanciare in console durante lo sviluppo: runReadinessSelfTest()
+function runReadinessSelfTest() {
+  const results = [];
+  const baseState = () => ({
+    task: [], taskDesc: '', output: [], outputLength: '',
+    role: '', level: 3, audience: '', quality: [], constraints: [],
+    fewshot: [], fewshotMode: 'no', contextText: '', contextUse: '', revision: ''
+  });
+
+  // T1 — stato vuoto: completezza bassa, non 0 forzato ma coerente col minimo
+  let s = baseState();
+  results.push({ nome: 'T1 stato vuoto', completeness: calculateCompleteness(s), atteso: 'basso (<=20)', pass: calculateCompleteness(s) <= 20 });
+
+  // T2 — fewshotMode 'no' non deve valere come completezza massima sul blocco esempi
+  s = baseState(); s.fewshotMode = 'no';
+  const c2 = calculateCompleteness(s);
+  s.fewshotMode = 'yes'; s.fewshot = [{input:'a',output:'b'},{input:'c',output:'d'}];
+  const c2yes = calculateCompleteness(s);
+  results.push({ nome: 'T2 fewshotMode no < yes con esempi', pass: c2 < c2yes, dettaglio: `no=${c2} yes=${c2yes}` });
+
+  // T3 — 'nessun ruolo specifico' non deve valere quanto un ruolo esplicito
+  s = baseState(); s.role = NEUTRAL_ROLE;
+  const c3neutral = calculateCompleteness(s);
+  s.role = 'consulente del settore';
+  const c3explicit = calculateCompleteness(s);
+  results.push({ nome: 'T3 ruolo neutro < ruolo esplicito', pass: c3neutral < c3explicit, dettaglio: `neutro=${c3neutral} esplicito=${c3explicit}` });
+
+  // T4 — testo di contesto senza modalità d'uso deve essere incompleto rispetto a testo+modalità
+  s = baseState(); s.contextText = 'x'.repeat(50);
+  const c4noUse = calculateCompleteness(s);
+  s.contextUse = 'Analizza il testo fornito e produci l\'output richiesto';
+  const c4withUse = calculateCompleteness(s);
+  results.push({ nome: 'T4 contesto senza modalità < con modalità', pass: c4noUse < c4withUse, dettaglio: `senza=${c4noUse} con=${c4withUse}` });
+
+  // T5 — conflitto "solo testo fornito" + "Ricercare" deve essere rilevato
+  s = baseState(); s.contextUse = CTX_SOLO_TESTO; s.task = ['Ricercare/trovare informazioni'];
+  const conf5 = detectConflicts(s);
+  results.push({ nome: 'T5 conflitto contesto/ricerca rilevato', pass: conf5.some(c => c.id === 'contesto-ricerca-conflitto'), dettaglio: conf5 });
+
+  // T6 (PR-1.1) — task creativo puro: non applicabile, non 100 ("copertura piena" sarebbe fuorviante)
+  s = baseState(); s.task = ['Brainstorming'];
+  const risk6 = calculateRiskCoverage(s);
+  results.push({ nome: 'T6 creativo puro = non applicabile (non 100)', pass: risk6.applicabile === false && risk6.score === null, dettaglio: risk6 });
+
+  // T7 (PR-1.1) — ricerca con SOLO "Non inventare" (senza fonti) NON deve dare copertura piena:
+  // fonti e "non inventare" sono dimensioni distinte, non intercambiabili
+  s = baseState(); s.task = ['Ricercare/trovare informazioni']; s.quality = [RQ_NOINVENT, RQ_ERRORS, RQ_UNCERTAINTY];
+  const risk7 = calculateRiskCoverage(s);
+  results.push({ nome: 'T7 ricerca senza fonti reali < 100', pass: risk7.applicabile === true && risk7.score < 100, dettaglio: risk7 });
+
+  // T8 (PR-1.1) — ricerca con criteri fattuali + fonti reali selezionate = copertura piena
+  s = baseState(); s.task = ['Ricercare/trovare informazioni'];
+  s.quality = [RQ_NOINVENT, RQ_ERRORS, RQ_UNCERTAINTY];
+  s.constraints = [RC_CITA_FONTI, RC_FONTI_PRIMARIE];
+  const risk8 = calculateRiskCoverage(s);
+  results.push({ nome: 'T8 ricerca con fonti reali = 100', pass: risk8.applicabile === true && risk8.score === 100, dettaglio: risk8 });
+
+  // T9 (PR-1.1) — conflitto severità bassa penalizza meno di uno medio
+  s = baseState(); s.output = ['JSON', 'codice']; // severità bassa (json-codice-dominanza)
+  const coh9bassa = calculateCoherence(s);
+  s = baseState(); s.contextUse = CTX_SOLO_TESTO; s.task = ['Ricercare/trovare informazioni']; // severità alta
+  const coh9alta = calculateCoherence(s);
+  results.push({ nome: 'T9 penalità bassa < alta', pass: coh9bassa > coh9alta, dettaglio: `bassa=${coh9bassa} alta=${coh9alta}` });
+
+  const passed = results.filter(r => r.pass).length;
+  console.table(results);
+  console.log(`Readiness self-test: ${passed}/${results.length} PASS`);
+  return results;
+}
 
 // ── INIT SIDEBAR ───────────────────────────────────────────────────────────
 function initSidebar() {
